@@ -13,20 +13,15 @@
             var images = [];
 
             obj.each(function(){
-                var $obj = $(this);
-                if($obj.attr('src').split('.').pop() == 'svg'){
+                if($(this).attr('src').split('.').pop() == 'svg'){
                     var image = new Image();
-                    image.src = $obj.attr('src');
+                    image.src = $(this).attr('src');
                     images.push(image.src);
                 }
             });	
 			
             if(images.length > 0){
-                var data = {
-                    svgsources: JSON.stringify(images)
-                };
-
-                $.post("http://svgmagic.bitlabsbeta.nl/converter.php", data, function(response){
+                $.post("http://svgmagic.bitlabsbeta.nl/converter.php", {svgsources: JSON.stringify(images)}, function(response){
                     obj.each(function(i){	
                         $(this).attr('src', response.results[i].url);
                     });
