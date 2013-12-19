@@ -2,6 +2,9 @@ SVGMagic - Cross browser SVG
 ========
 A simple jQuery plugin that creates a fallback for .SVG images. In case your browser doesn't support .SVG images it will create a .PNG file and replace the .SVG with it. This means that you don't have to create two versions of your images to support IE8 and lower.
 
+SVG is a vector graphics format, meaning it’s perfectly scalable. Whatever size it needs to display at, or whatever screen it needs to display on, an SVG will adapt perfectly. This means that you can use the same image for desktop and mobile (including Retina) visitors. They all get a perfectly sharp image.
+![ScreenShot](http://www.chriscullmann.com/wp-content/uploads/2013/04/svg-image-comparison.png)
+
 Installation
 ------------
 Just include the script in your header and call the plugin in your document ready
