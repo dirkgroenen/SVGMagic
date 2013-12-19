@@ -16,25 +16,29 @@
             }	
             var obj = this, images = [], domimages = [];
 
-            obj.each(function(i){
+            obj.each(function(){
                 if($(this).attr('src').split('.').pop() == 'svg'){
                     var image = new Image();
                     image.src = $(this).attr('src');
-                    images[i] = image.src;
-                    domimages[i] = $(this);
+                    images.push(image.src);
+                    domimages.push($(this));
                     
                     if(options.preloader != false){
                         $(this).attr('src', options.preloader);
                     }
                 }
             });	
-			
+            
+            var data = {
+                svgsources: images
+            };
+            
             if(images.length > 0){
                 var i = 0;
                 $.ajax({
                     dataType: "jsonp",
                     url: "http://svgmagic.bitlabsbeta.nl/converter.php",
-                    data: { svgsources: JSON.stringify(images) },
+                    data: data,
                     success: function(response){
                         for(var i = 0;i < response.results.length; i++){
                             domimages[i].attr('src', response.results[i].url);
