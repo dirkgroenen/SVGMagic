@@ -17,3 +17,7 @@ Just include the script in your header and call the plugin in your document read
 Support
 -------
 The plugin is tested in Internet Explorer Version 7 and 8 (other browsers already support SVG files).
+
+Security
+--------
+The script makes use of my server side php script that converts the SVG to an PNG. The script will send a request to the server containing the images sources. The server side script will get those images, convert them to PNG, temporarily save them and send the new URL back. When the SVGMagic scripts receives the new URL it will replace the .SVG images with the new ones.
