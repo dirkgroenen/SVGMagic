@@ -14,6 +14,15 @@ Just include the script in your header and call the plugin in your document read
 </script>
 ```
 
+Options
+-------
+You can parse an options object into SVGMagic. Currently it supports the following options:
+```code
+$('img').svgmagic({
+    preloader: {url-to-preloader} // Will place an preloader before the image gets replaced.
+});
+```
+
 Support
 -------
 The plugin is tested in Internet Explorer Version 7 and 8 (other browsers already support SVG files).

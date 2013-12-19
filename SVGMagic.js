@@ -1,5 +1,10 @@
 (function( $ ){
-    $.fn.svgmagic = function() {	
+    $.fn.svgmagic = function(givenoptions) {	
+        var defaultoptions = {
+            preloader: false
+        }
+        var options = $.extend(defaultoptions,givenoptions);
+        
         var ieversion = false;
         if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)){ 
             ieversion=new Number(RegExp.$1);
@@ -19,6 +24,10 @@
                     image.src = $(this).attr('src');
                     images[i] = image.src;
                     domimages[i] = $(this);
+                    
+                    if(options.preloader != false){
+                        $(this).attr('src', options.preloader);
+                    }
                 }
             });	
 			
