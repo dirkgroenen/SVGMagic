@@ -19,7 +19,7 @@ Options
 You can parse an options object into SVGMagic. Currently it supports the following options:
 ```code
 $('img').svgmagic({
-    preloader: {url-to-preloader} // Will place an preloader before the image gets replaced, default: false
+    preloader: {url-to-preloader} // Preloader before the image gets replaced, default: false
 });
 ```
 
