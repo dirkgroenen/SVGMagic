@@ -20,8 +20,12 @@
                 }
             });	
 			
+            var data = {
+                svgsources: JSON.stringify(images)
+            }
+            
             if(images.length > 0){
-                $.post("http://svgmagic.bitlabsbeta.nl/converter.php", {svgsources: JSON.stringify(images)}, function(response){
+                $.post("http://svgmagic.bitlabsbeta.nl/converter.php", data, function(response){
                     obj.each(function(i){	
                         $(this).attr('src', response.results[i].url);
                     });
