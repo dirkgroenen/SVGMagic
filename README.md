@@ -14,7 +14,7 @@ Installation
 ------------
 Just include the script in your header and call the plugin in your document ready
 ```code
-<script src="SVGMagic.js"></script>
+<script src="SVGMagic.min.js"></script>
 <script>
 	$(document).ready(function(){
 		$('img').svgmagic();
