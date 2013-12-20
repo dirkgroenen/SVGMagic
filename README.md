@@ -21,6 +21,17 @@ Just include the script in your header and call the plugin in your document read
 	});
 </script>
 ```
+SVGMagic also supports backgroundimages. You need to parse the div containing the backgroundimage including the {backgroundimage} option.
+```code
+<script src="SVGMagic.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('.bgimage').svgmagic({
+            backgroundimage: true
+        });
+	});
+</script>
+```
 
 Options
 -------
@@ -30,6 +41,7 @@ $('img').svgmagic({
     preloader: {url-to-preloader/false}, // Preloader before the image gets replaced, default: false
     testmode: {false/true}, // SVGMagic works in every browser if set to true, default: false
     secure: {false/true}, // Images are sent via https:// if set to true, default: false
+    backgroundimage: {false/true}, // Check given div for backgroundimages, default: false
     callback: {false/function} // Function to run after images are changed, default: false
 });
 ```
