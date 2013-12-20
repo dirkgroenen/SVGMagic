@@ -8,7 +8,7 @@ SVG is a vector graphics format, meaning it’s perfectly scalable. Whatever size 
 
 ![ScreenShot](http://www.chriscullmann.com/wp-content/uploads/2013/04/svg-image-comparison.png)
 
-You can find more information about SVG images in this [Smashing article](http://coding.smashingmagazine.com/2012/01/16/resolution-independence-with-svg/).
+You can find more information about SVGMagic on [our website](http://svgmagic.bitlabs.nl/).
 
 Installation
 ------------
@@ -27,7 +27,9 @@ Options
 You can parse an options object into SVGMagic. Currently it supports the following options:
 ```code
 $('img').svgmagic({
-    preloader: {url-to-preloader} // Preloader before the image gets replaced, default: false
+    preloader: {url-to-preloader/false} // Preloader before the image gets replaced, default: false
+    testmode: {false/true} // SVGMagic works in every browser if set to true, default: false
+    secure: {false/true} // Images are sent via https:// if set to true, default: false
 });
 ```
 
