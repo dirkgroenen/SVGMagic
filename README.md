@@ -8,7 +8,7 @@ SVG is a vector graphics format, meaning it’s perfectly scalable. Whatever size 
 
 ![ScreenShot](http://www.chriscullmann.com/wp-content/uploads/2013/04/svg-image-comparison.png)
 
-You can find more information about SVGMagic on [our website](http://svgmagic.bitlabs.nl/).
+You can find more information and demos on [our website](http://svgmagic.bitlabs.nl/).
 
 Installation
 ------------
