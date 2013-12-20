@@ -21,7 +21,8 @@
         var defaultoptions = {
             preloader: false,
             testmode: false,
-            secure: false
+            secure: false,
+            callback: false
         }
         var options = $.extend(defaultoptions,givenoptions);
         
@@ -67,6 +68,10 @@
                         for(var i = 0;i < response.results.length; i++){
                             clearTimeout(preloaderTimer[i]);
                             domimages[i].attr('src', response.results[i].url);
+                        }
+                        
+                        if(options.callback){
+                            options.callback();
                         }
                     }
                 });

@@ -27,9 +27,10 @@ Options
 You can parse an options object into SVGMagic. Currently it supports the following options:
 ```code
 $('img').svgmagic({
-    preloader: {url-to-preloader/false} // Preloader before the image gets replaced, default: false
-    testmode: {false/true} // SVGMagic works in every browser if set to true, default: false
-    secure: {false/true} // Images are sent via https:// if set to true, default: false
+    preloader: {url-to-preloader/false}, // Preloader before the image gets replaced, default: false
+    testmode: {false/true}, // SVGMagic works in every browser if set to true, default: false
+    secure: {false/true}, // Images are sent via https:// if set to true, default: false
+    callback: {false/function} // Function to run after images are changed, default: false
 });
 ```
 
