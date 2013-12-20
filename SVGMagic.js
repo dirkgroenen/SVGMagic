@@ -60,7 +60,6 @@
             if(options.backgroundimage){
                 if(obj.css('background-image') != undefined){
                     var bgsrc = obj.css('background-image').replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-                    console.log(bgsrc);
                     if(bgsrc.split('.').pop() == 'svg'){
                         var image = new Image();
                         image.src = bgsrc;
