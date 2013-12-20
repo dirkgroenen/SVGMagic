@@ -4,7 +4,7 @@ A simple jQuery plugin that creates a fallback for .SVG images (backgroundimage 
 
 Big difference with other fallback plugins: this plugin CREATES the PNG image automatically. This means that you don't have to create an extra folder with PNG images.
 
-SVG is a vector graphics format, meaning it�s perfectly scalable. Whatever size it needs to display at, or whatever screen it needs to display on, an SVG will adapt perfectly. This means that you can use the same image for desktop and mobile (including Retina) visitors. They all get a perfectly sharp image.
+SVG is a vector graphics format, meaning it's perfectly scalable. Whatever size it needs to display at, or whatever screen it needs to display on, an SVG will adapt perfectly. This means that you can use the same image for desktop and mobile (including Retina) visitors. They all get a perfectly sharp image.
 
 ![ScreenShot](http://www.chriscullmann.com/wp-content/uploads/2013/04/svg-image-comparison.png)
 
