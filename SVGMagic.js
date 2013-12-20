@@ -58,7 +58,7 @@
             
             // If backgroundimage option is enabled it will search for background images in the div
             if(options.backgroundimage){
-                if(obj.css('background-image') != undefined){
+                if(obj.css('background-image') != "none" && obj.css('background-image') != undefined){
                     var bgsrc = obj.css('background-image').replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
                     if(bgsrc.split('.').pop() == 'svg'){
                         var image = new Image();
