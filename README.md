@@ -41,3 +41,7 @@ The plugin is tested in Internet Explorer Version 7 and 8 (other browsers alread
 Security
 --------
 The script makes use of a server side php script that converts the SVG to an PNG. The script will send a request to the server containing the images sources. The server will get those images, convert them to PNG, temporarily save them and send the new URL back. When the SVGMagic scripts receives the new URL it will replace the .SVG images with the new ones. 
+
+Demo
+----
+A demo of SVGMagic can be found on the [SVGMagic website](http://svgmagic.bitlabs.nl/).
