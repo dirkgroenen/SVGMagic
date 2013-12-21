@@ -1,6 +1,6 @@
 SVGMagic - Cross browser SVG
 ========
-A simple jQuery plugin that creates a fallback for .SVG images (backgroundimage supported to!). In case your browser doesn't support .SVG images it will create a .PNG file and replace the .SVG with it. This means that you don't have to create two versions of your images to support IE8 and lower.
+A simple jQuery plugin that creates a fallback for .SVG images (backgroundimage supported to!). In case your browser doesn't support .SVG images it will <b>create</b> a .PNG file and replace the .SVG with it. Meaning that you don't have to create and store two copies of your image.
 
 Big difference with other fallback plugins: this plugin CREATES the PNG image automatically. This means that you don't have to create an extra folder with PNG images.
 
