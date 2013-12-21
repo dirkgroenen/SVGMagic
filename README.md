@@ -1,3 +1,4 @@
+![ScreenShot](http://svgmagic.bitlabs.nl/svgmagic_tweakers.png)
 SVGMagic - Cross browser SVG
 ========
 A simple jQuery plugin that creates a fallback for .SVG images (backgroundimage supported to!). In case your browser doesn't support .SVG images it will <b>create</b> a .PNG file and replace the .SVG with it. Meaning that you don't have to create and store two copies of your image.
