@@ -54,15 +54,19 @@
             
             // If backgroundimage option is enabled it will search for background images in the div
             if(options.backgroundimage){
-                if(obj.css('background-image') != "none" && obj.css('background-image') != undefined){
-                    var bgsrc = obj.css('background-image').replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-                    if(bgsrc.split('.').pop() == 'svg'){
-                        var image = new Image();
-                        image.src = bgsrc;
-                        images.push(image.src);
-                        cssimages.push(obj);
+                obj.each(function(){
+                    console.log(this);
+                    if($(this).css('background-image') != "none" && $(this).css('background-image') != undefined){
+                        var bgsrc = $(this).css('background-image').replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+                        console.log(bgsrc);
+                        if(bgsrc.split('.').pop() == 'svg'){
+                            var image = new Image();
+                            image.src = bgsrc;
+                            images.push(image.src);
+                            cssimages.push($(this));
+                        }
                     }
-                }
+                });
             }
             
             var data = {
