@@ -1,4 +1,4 @@
-/*  Version 2.1.4
+/*  Version 2.2.0
     It's a simple jQuery plugin that searchs for SVG images on your website and creates PNG versions on the run. 
     Meaning that you don't have to create different versions of the images yourself.
     Copyright (C) 2013 - Dirk Groenen [Bitlabs Development]
@@ -23,7 +23,8 @@
             testmode: false,
             secure: false,
             callback: false,
-            backgroundimage: false
+            backgroundimage: false,
+            dumpcache: false
         }
         var options = $.extend(defaultoptions,givenoptions);
         var preloaderTimer = [];
@@ -69,7 +70,8 @@
             
             var data = {
                 svgsources: images,
-                secure: options.secure
+                secure: options.secure,
+                dumpcache: options.dumpcache
             };
             
             if(images.length > 0){

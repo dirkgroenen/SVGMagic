@@ -4,6 +4,7 @@
     header('Access-Control-Allow-Origin: *');
     
     $inputimages = ($_REQUEST["svgsources"]);
+    $dumpcache = ($_REQUEST["dumpcache"]);
     $urlprefix   = ($_REQUEST["secure"] == 'false') ? 'http://' : 'https://';
     $result      = array(
         'error' => '1',
@@ -33,6 +34,13 @@
             
             $imagefolder = "images/results/" . $domain;
             
+            // Check if we need to dump the cache
+            if($dumpcache == "true"){
+                if(file_exists($imagefolder . '/'.$filename.'.png')){
+                    unlink($imagefolder . '/'.$filename.'.png');
+                }
+            }
+
             // Check if the file already exists
             if (!file_exists($imagefolder . '/' . $filename . '.png')) {
                 // Get the image

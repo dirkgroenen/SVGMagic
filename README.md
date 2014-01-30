@@ -44,6 +44,7 @@ $('img').svgmagic({
     secure: {false/true}, // Images are sent via https:// if set to true, default: false
     backgroundimage: {false/true}, // Check given div for backgroundimages, default: false
     callback: {false/function} // Function to run after images are changed, default: false
+    dumpcache: {false/true} // Force to remove the cache and create a new .PNg, default: false
 });
 ```
 
@@ -51,10 +52,15 @@ Support
 -------
 The plugin is tested in Internet Explorer Version 7 and 8 (other browsers already support SVG files).
 
-Security
+Security / How it works
 --------
 The script makes use of a server side php script that converts the SVG to an PNG. The script will send a request to the server containing the images sources. The server will get those images, convert them to PNG, temporarily save them and send the new URL back. When the SVGMagic scripts receives the new URL it will replace the .SVG images with the new ones. 
 
 Demo
 ----
 A demo of SVGMagic can be found on the [SVGMagic website](http://svgmagic.bitlabs.nl/).
+
+
+Known bugs
+----------
+- Because the image URL's are sent to the server via a GET request it's possible that it will fail when a page has many images. 
