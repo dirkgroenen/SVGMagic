@@ -66,4 +66,4 @@ A demo of SVGMagic can be found on the [SVGMagic website](http://svgmagic.bitlab
 
 Known bugs
 ----------
-- Because the image URL's are sent to the server via a GET request it's possible that it will fail when a page has many images. 
+[empty]
