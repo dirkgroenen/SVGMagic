@@ -1,4 +1,4 @@
-/*  Version 2.2.0
+/*  Version 2.3.0
     It's a simple jQuery plugin that searchs for SVG images on your website and creates PNG versions on the run. 
     Meaning that you don't have to create different versions of the images yourself.
     Copyright (C) 2013 - Dirk Groenen [Bitlabs Development]
@@ -36,8 +36,8 @@
             var obj = this, images = [], domimages = [], cssimages = [];
 
             obj.each(function(){
-                if($(this).attr('src') != undefined){
-                    if($(this).attr('src').split('.').pop() == 'svg'){
+                if($(this).attr("src") != undefined){
+                    if($(this).attr("src").split(".").pop() == "svg" || $(this).attr("src").substr(0, 18) == "data:image/svg+xml"){
                         $obj = $(this);
                         var image = new Image();
                         image.src = $(this).attr('src');
@@ -46,10 +46,11 @@
                         
                         if(options.preloader != false){
                             preloaderTimer.push(setTimeout(function(){
-                                $obj.attr('src', options.preloader);
+                                $obj.attr("src", options.preloader);
                             },500));
                         }
                     }
+
                 }
             });	
             
@@ -77,8 +78,9 @@
             if(images.length > 0){
                 var i = 0;
                 $.ajax({
-                    dataType: "jsonp",
-                    url: "http://svgmagic.bitlabs.nl/converter.php",
+                    dataType: "json",
+                    method: "POST",
+                    url: "http://svgmagic.bitlabs.nl/converter2.4.0.php",
                     data: data,
                     success: function(response){
                         var i;
