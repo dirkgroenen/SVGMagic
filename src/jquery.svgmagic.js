@@ -230,5 +230,7 @@
           
           return originalOptions;
         }
+        
+        return this;
     };
 }(jQuery));
