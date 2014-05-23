@@ -97,6 +97,30 @@
  * * remoteDataType           [string] This is the data-type sent to and received from the remote server.  By default
  *                            this is set to 'json'.
  * 
+ * * replacementUriCreator    [function(jQueryElement, originalUri, isBackground)] If provided, this option alters the
+ *                            behaviour of SVGMagic, short-cutting out the initial call to the remote server, to
+ *                            retrieve the URIs to the replacement PNG images.  This is suitable for use in specialised
+ *                            scenarios when the creation of the URI for the PNG replacements may be accomplished
+ *                            entirely in JavaScript.  The server hosting those replacement PNG images must also be
+ *                            capable of serving the correct image with only a single GET URI (as the server will not
+ *                            have been pre-notified of the path to the SVG source file).  As such, it is most likely to
+ *                            be used in hosted applications on a single domain, in which server-side logic has been
+ *                            created to serve pre-ordained PNG replacement images.
+ * 
+ *                            The parameters which this function receives are:
+ *                            * [object] A reference to the jQuery object representing the HTML node on which the
+ *                              replacement is to be made.
+ *                            * [string] The URI of the original SVG image to be replaced.
+ *                            * [boolean] True if the replacement is a CSS background-image, false if it is an HTML
+ *                              image element.
+ * 
+ *                            The function (if present) must return a string.  This string indicates the URI to the
+ *                            PNG replacement image.  If null is returned then the replacement is skipped and the
+ *                            original SVG image is left in-place.
+ * 
+ *                            The default behaviour (in which this function is null/not-provided) uses a call to a
+ *                            remote server/API endpoint containing a list of the URIs of the SVG images to be replaced,
+ *                            The response is parsed for the URIs of the replacement PNG images. 
  * 
  * ------------------
  * Deprecated options
@@ -179,7 +203,9 @@
         // New options
         remoteServerUri:        'http://svgmagic.bitlabs.nl/converter.php',
         remoteRequestType:      'POST',
-        remoteDataType:         'json'
+        remoteDataType:         'json',
+        // TODO: Implement this option
+        replacementUriCreator:  null
       },
       untidyOptions = $.extend(defaultOptions, givenOptions),
       options = tidyOptions(untidyOptions),
@@ -290,63 +316,94 @@
      */
     function getReplacementUris(opts, nodes)
     {
-      var
-        sources = [],
-        data = {};
-        
+      var replacementFunction = opts.replacementUriCreator;
       images = buildImageList(opts, nodes);
       
       if(images.length > 0)
       {
-        for(var i = 0; i < images.length; i++)
+        if(replacementFunction && typeof replacementFunction == 'function')
         {
-          sources.push(images[i].originalUri);
-        }
-        
-        $.extend(data, opts.additionalRequestData, { svgsources: sources });
-        
-        $.ajax({
-          dataType: options.remoteDataType,
-          method: options.remoteRequestType,
-          url: options.remoteServerUri,
-          data: data,
-          success: function(response) {
-            performReplacements(response, images, opts);
+          for(var i = 0; i < images.length; i++)
+          {
+            var image = images[i];
+            image.replacementUri = replacementFunction(image.element, image.originalUri, image.isBackground);
           }
-        });
+          
+          performReplacements(opts);
+        }
+        else
+        {
+          performRemoteApiCall(opts);
+        }
       }
+    }
+    
+    /**
+     * Gets all of the replacement image URIs from a remote server using an API call.
+     */
+    function getReplacementUrisFromRemoteService(opts)
+    {
+      var
+        sources = [],
+        data = {};
+      
+      for(var i = 0; i < images.length; i++)
+      {
+        sources.push(images[i].originalUri);
+      }
+      
+      $.extend(data, opts.additionalRequestData, { svgsources: sources });
+      
+      $.ajax({
+        dataType: opts.remoteDataType,
+        method: opts.remoteRequestType,
+        url: opts.remoteServerUri,
+        data: data,
+        success: function(response) {
+          for(var i = 0; i < images.length; i++)
+          {
+            var
+              image = images[i],
+              responseUri = response.results[i].url;
+            
+            image.replacementUri = responseUri;
+          }
+          
+          performReplacements(opts);
+        }
+      });
     }
     
     /**
      * Performs image replacements using the result from the remote replacement service.
      */
-    function performReplacements(response, images, opts)
+    function performReplacements(opts)
     {
       for(var i = 0; i < images.length; i++)
       {
-        var
-          image = images[i],
-          responseUri = response.results[i].url;
+        var image = images[i], newUri = image.replacementUri;
         
-        image.replacementUri = responseUri;
-        
-        if(!image.isBackground)
+        if(!newUri)
+        {
+          continue;
+        }
+        else if(!image.isBackground)
         {
           if(opts.temporaryHoldingImage)
           {
             clearTimeout(holdingImageTimeouts[i]);
           }
-          image.element.attr(srcAttributeName, responseUri);
+          image.element.attr(srcAttributeName, newUri);
         }
         else
         {
-          image.element.css(backgroundImagePropertyName, 'url("' + responseUri + '")');
+          image.element.css(backgroundImagePropertyName, 'url("' + newUri + '")');
         }
+      }
         
-        if(typeof opts.postReplacementCallback == 'function')
-        {
-          opts.postReplacementCallback(images);
-        }
+      if(opts.postReplacementCallback && typeof opts.postReplacementCallback == 'function')
+      {
+        opts.postReplacementCallback(images);
       }
     }
         
