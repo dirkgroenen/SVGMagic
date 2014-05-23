@@ -16,8 +16,49 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+/*
+ * -------
+ * Options
+ * -------
+ * * preloader                [string or boolean] This is the URI to an image file which is used as a "holding" image
+ *                            for your SVG images while the PNG replacements load from the remote server.  If set to
+ *                            boolean false (the default behaviour) then no such holding image is used.
+ * 
+ * * testmode                 [boolean] If set to true then the SVG replacement will be forced on all browsers,
+ *                            including those which report that they support SVG natively.  If set to false (the default
+ *                            behaviour) then the SVG replacement will only be performed upon browsers which do not
+ *                            support it natively.
+ * 
+ * * secure                   [boolean] The value (true or false) of this option is passed to the remote SVG replacement
+ *                            server as part of the HTTP POST parameters.  Whilst the server may honour it or not, it is
+ *                            intended that if the value is true, then the remote server will return a series of HTTPS
+ *                            URIs (for the PNG replacement images). If set to false (the default behaviour) then the
+ *                            remote server should return HTTP (non-secured) URIs.
+ * 
+ *                            Regardless of the setting of this option - the initial call to the remote server will be
+ *                            performed via unsecured HTTP.
+ * 
+ * * callback                 [function()] An optional callback function which executes once all of the PNG replacement
+ *                            image URIs have been retrieved from the remote server and all of the SVG images have had
+ *                            their URIs replaced.  This is not quite a callback which executes after the replacement
+ *                            images have loaded.  If the value is set to false (the default behaviour) then no
+ *                            additional callback is executed.  No parameters are passed to this callback.
+ * 
+ * * backgroundimage          [boolean] If set to true then additional inspection will be performed upon all matched
+ *                            elements in order to find a CSS background-image property.  If such a property is found
+ *                            then it will be included in the replacement process.  If set to false (the default
+ *                            behaviour) then no additional work will be performed to find background-images which are
+ *                            SVG.
+ * 
+ * * dumpcache                [boolean] The value (true or false) of this option is passed to the remote SVG replacement
+ *                            server as part of the HTTP POST parameters.  If set to true, then the server is requested
+ *                            to clear any cached PNG copy of the replaced SVG image.  This will result in the remote
+ *                            server re-generating the PNG replacement.  If set to false (the default behaviour) then
+ *                            the remote server is expected to serve cached PNG replacement images where possible. 
+ */
 (function( $ ){
-    $.fn.svgmagic = function(givenoptions) {	
+    $.fn.svgmagic = function(givenoptions) {  
         var defaultoptions = {
             preloader: false,
             testmode: false,
