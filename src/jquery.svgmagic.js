@@ -1,12 +1,16 @@
-/*  This jQuery plugin replaces SVG images in HTML 'img' elements (and optionally CSS in background-images) with
+﻿/*  This jQuery plugin replaces SVG images in HTML 'img' elements (and optionally CSS in background-images) with
     PNG replacement images.  This is accomplished by the use of a remote image replacement service.
     
     Copyright © 2013-2014 - Authors:
     
-    * Dirk Groenen [Bitlabs Development]                              Original design
+    * Dirk Groenen [Bitlabs Development - dirk@bitlabs.nl]            Original author
     
-    * Craig Fowler [CSF Software Limited - craig@csf-dev.com]         Refactoring and improvement
+    * Craig Fowler [CSF Software Limited - craig@csf-dev.com]         Redesign and enhancements
+    
+    * Mark van Eijk [mark@vormkracht10.nl]                            Improvements to PHP converter script
 
+    Version 2.4.0
+    
     ---
 
     This program is free software: you can redistribute it and/or modify
