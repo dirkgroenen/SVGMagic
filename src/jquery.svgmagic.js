@@ -66,11 +66,13 @@
             callback: false,
             backgroundimage: false,
             dumpcache: false
-        }
+        };
         var options = $.extend(defaultoptions,givenoptions);
         var preloaderTimer = [];
 		
-        if(options.testmode || !document.createElement('svg').getAttributeNS){
+        if(options.testmode || !document.createElement('svg').getAttributeNS)
+        {
+
             var obj = this, images = [], domimages = [], cssimages = [];
 
             obj.each(function(){
