@@ -13,8 +13,9 @@
 $(document).ready(function() {
   $('.replace_me')
     .svgmagic({
-      testmode: true,
-      backgroundimage: true
+      remoteServerUri: 'http://example.com/',
+      forceReplacements: true,
+      handleBackgroundImages: true
     });
 });
 </script>

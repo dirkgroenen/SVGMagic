@@ -17,18 +17,52 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*
- * -------
+/* -------
  * Options
  * -------
+ * * temporaryHoldingImage    [string] This is a URI to an image which will be used as a "holding" image for the SVG
+ *                            replacements until the URI of the appropriate PNG replacement has been retrieved from the
+ *                            remote server. If set to null (the default behaviour) then no holding image will be used.
+ * 
+ * * forceReplacements        [boolean] If set to true then SVGMagic will replace SVG images even when the web browser
+ *                            reports that it has native SVG support. If set to false (the default behaviour) then
+ *                            replacement will only be performed when the web browser does not natively support SVG
+ *                            images.
+ * 
+ * * handleBackgroundImages   [boolean] If set to true then SVGMagic will inspect the CSS background-image property of
+ *                            matched elements.  If the background image is an SVG then replacement will additionally
+ *                            be performed upon the background image.  If set to false (the default behaviour) then no
+ *                            attempt will be made to detect and replace CSS background images.
+ * 
+ *                            Note that even when this option is enabled, background images are only detected on matched
+ *                            elements.  No DOM search is performed to discover background images on (for example) child
+ *                            nodes.
+ * 
+ * * additionalRequestData    [object] This is an object representing key/value pairs of information to send to the
+ *                            remote server as part of the request.  The default is an empty object (resulting in no
+ *                            additional data being sent).
+ * 
+ *                            This option is affected by the deprecated options 'secure' and 'dumpcache'.  Presently,
+ *                            in order to preserve backwards-compatibility, the keys 'secure' and 'dumpcache' will
+ *                            always be added to the request data if they are no already present.  The values of these
+ *                            keys will contain the respective values of those deprecated options.
+ *
+ * ------------------
+ * Deprecated options
+ * ------------------
  * * preloader                [string or boolean] This is the URI to an image file which is used as a "holding" image
  *                            for your SVG images while the PNG replacements load from the remote server.  If set to
  *                            boolean false (the default behaviour) then no such holding image is used.
  * 
+ *                            DEPRECATED: Use 'temporaryHoldingImage' instead.  If 'temporaryHoldingImage' is set then
+ *                            this option is ignored.
+ *
  * * testmode                 [boolean] If set to true then the SVG replacement will be forced on all browsers,
  *                            including those which report that they support SVG natively.  If set to false (the default
  *                            behaviour) then the SVG replacement will only be performed upon browsers which do not
  *                            support it natively.
+ * 
+ *                            DEPRECATED: Use 'forceReplacements' instead.
  * 
  * * secure                   [boolean] The value (true or false) of this option is passed to the remote SVG replacement
  *                            server as part of the HTTP POST parameters.  Whilst the server may honour it or not, it is
@@ -38,6 +72,10 @@
  * 
  *                            Regardless of the setting of this option - the initial call to the remote server will be
  *                            performed via unsecured HTTP.
+ * 
+ *                            DEPRECATED: Use 'additionalRequestData' instead, adding data which the server will
+ *                            interpret in order to serve HTTPS image URIs.  The value of this option will be appended
+ *                            to the additional request data before it is sent to the server.
  * 
  * * callback                 [function()] An optional callback function which executes once all of the PNG replacement
  *                            image URIs have been retrieved from the remote server and all of the SVG images have had
@@ -51,24 +89,42 @@
  *                            behaviour) then no additional work will be performed to find background-images which are
  *                            SVG.
  * 
+ *                            DEPRECATED: Use 'handleBackgroundImages' instead.
+ * 
  * * dumpcache                [boolean] The value (true or false) of this option is passed to the remote SVG replacement
  *                            server as part of the HTTP POST parameters.  If set to true, then the server is requested
  *                            to clear any cached PNG copy of the replaced SVG image.  This will result in the remote
  *                            server re-generating the PNG replacement.  If set to false (the default behaviour) then
  *                            the remote server is expected to serve cached PNG replacement images where possible. 
+ * 
+ *                            DEPRECATED: Use 'additionalRequestData' instead, adding data which the server will
+ *                            interpret as a request to drop its cache.  The value of this option will be appended
+ *                            to the additional request data before it is sent to the server.
  */
-(function( $ ){
-    $.fn.svgmagic = function(givenoptions) {  
-        var defaultoptions = {
-            preloader: false,
-            testmode: false,
-            secure: false,
-            callback: false,
-            backgroundimage: false,
-            dumpcache: false
-        };
-        var options = $.extend(defaultoptions,givenoptions);
-        var preloaderTimer = [];
+
+(function($)
+{
+  $.fn.svgmagic = function(givenOptions) {
+    var defaultOptions = {
+      // Deprecated options
+      preloader:              false,
+      testmode:               false,
+      secure:                 false,
+      callback:               false,
+      backgroundimage:        false,
+      dumpcache:              false,
+      
+      // Replacements for deprecated options
+      temporaryHoldingImage:  null,
+      forceReplacements:      false,
+      handleBackgroundImages: false,
+      additionalRequestData:  {},
+    };
+    
+    var
+      untidyOptions = $.extend(defaultOptions, givenOptions),
+      options = tidyOptions(untidyOptions),
+      preloaderTimer = [];
 		
         if(options.testmode || !document.createElement('svg').getAttributeNS)
         {
@@ -143,6 +199,36 @@
                 });
         
             }
+        }
+        
+        /**
+         * Tidies up an object containing options for this plugin.  Takes any deprecated options (where set) and writes
+         * them into the equivalent replacement option.
+         */
+        function tidyOptions(originalOptions)
+        {
+          if(!originalOptions.temporaryHoldingImage
+             && originalOptions.preloader
+             && typeof originalOptions.preloader == 'string')
+          {
+            originalOptions.temporaryHoldingImage = originalOptions.preloader;
+          }
+          
+          if(originalOptions.testmode && typeof originalOptions.testmode == 'boolean')
+          {
+            originalOptions.forceReplacements = true;
+          }
+          
+          if(!additionalRequestData['secure'])
+          {
+            originalOptions.additionalRequestData.secure = originalOptions.secure;
+          }
+          if(!additionalRequestData['dumpcache'])
+          {
+            originalOptions.additionalRequestData.dumpcache = originalOptions.dumpcache;
+          }
+          
+          return originalOptions;
         }
     };
 }(jQuery));
