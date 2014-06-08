@@ -104,5 +104,7 @@
         
             }
         }
+
+        return this;
     };
 }(jQuery));
