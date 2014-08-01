@@ -178,7 +178,7 @@ section#bottom #walkthrough .server{
     top: 0;
     right: 50px;
     z-index: 5;
-    background: url('./style/server.png') no-repeat;
+    background: url('../style/server.png') no-repeat;
     height: 152px;
     width: 151px;
 }
@@ -189,7 +189,7 @@ section#bottom #walkthrough .line{
     left: 100px;
     right: 100px;
     height: 2px; 
-    background: #EA3556 url('./style/line.png') repeat-x;
+    background: #EA3556 url('../style/line.png') repeat-x;
     z-index: 1;
 }
 
@@ -225,7 +225,7 @@ section#bottom #walkthrough .browser{
     left: 50px;
     top: 0;
     z-index: 5;
-    background-image: url('./style/browser.png');
+    background-image: url('../style/browser.png');
     background-repeat: no-repeat;
     height: 152px;
     width: 234px;
@@ -262,7 +262,7 @@ code{
 
 #bgdemo{
     overflow:hidden;
-    background-image: url("./style/resizeicon.svg");
+    background-image: url("../style/resizeicon.svg");
     height:108px;
     background-position:center;
     background-repeat:no-repeat;
