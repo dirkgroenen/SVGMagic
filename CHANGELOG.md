@@ -23,4 +23,4 @@ Craigfowler's fork has been merged which brings some changes in how we should us
         - callback          > postReplacementCallback
         - dumpcache         > additionalRequestData
         
-    Read the README or comment in the source file for more information about the new options/functionalities
+Read the README or comment in the source file for more information about the new options/functionalities
