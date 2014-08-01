@@ -56,7 +56,7 @@ $('img').svgmagic({
 
 additionalRequestData
 -------
-The ```additionalRequestData``` option gives you the posibility to add extra data to the ajax request. The default API script supports two extra options: ```secure: true``` and ```dumpcache```. 
+The ```additionalRequestData``` option gives you the posibility to add extra data to the ajax request. The default API script supports two extra options: ```{secure: true}``` and ```{dumpcache: true}```. 
 
 Support
 -------
