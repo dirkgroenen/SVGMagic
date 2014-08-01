@@ -9,7 +9,7 @@
     
     * Mark van Eijk [mark@vormkracht10.nl]                            Improvements to PHP converter script
 
-    Version 2.4.0
+    Version 2.4.1
     
     ---
 
@@ -181,272 +181,265 @@
  */
 
 (function($) {
-  $.fn.svgmagic = function(givenOptions)
-  {
-    var
-      defaultOptions = {
-        // Deprecated options
-        preloader:              false,
-        testmode:               false,
-        secure:                 false,
-        callback:               false,
-        backgroundimage:        false,
-        dumpcache:              false,
-        
-        // Replacements for deprecated options
-        temporaryHoldingImage:  null,
-        forceReplacements:      false,
-        handleBackgroundImages: false,
-        additionalRequestData:  {},
-        postReplacementCallback:null,
-        
-        // New options
-        remoteServerUri:        'http://svgmagic.bitlabs.nl/converter.php',
-        remoteRequestType:      'POST',
-        remoteDataType:         'json',
-        // TODO: Implement this option
-        replacementUriCreator:  null
-      },
-      untidyOptions = $.extend(defaultOptions, givenOptions),
-      options = tidyOptions(untidyOptions),
-      holdingImageTimeouts = {},
-      matchedNodes = this,
-      images = [],
-      imgElementName = 'img',
-      srcAttributeName = 'src',
-      backgroundImagePropertyName = 'background-image',
-      urlMatcher = /^url\(["']?([^"'()]+)["']?\)$/,
-      svgExtension = /\.svg$/,
-      svgDataUri = /^data:image\/svg\+xml/,
-      holdingImageTimeoutDuration = 500;
-    
-    if(shouldPerformReplacement(options))
+    $.fn.svgmagic = function(givenOptions)
     {
-      getReplacementUris(options, matchedNodes);
-    }
-    
-    /**
-     * Determines whether or not image replacements should be performed.
-     * 
-     * @return [boolean] True if SVG replacements should be made, false if not.
-     */
-    function shouldPerformReplacement(opts)
-    {
-      return opts.forceReplacements
-             || typeof document.createElement('svg').getAttributeNS !== 'function';
-    }
-    
-    /**
-     * Builds and returns an array of all of the matched image elements and 'elements which require background-image
-     * replacements'.  These objects contain a reference to the element, as well as the image URI.
-     * 
-     * @return [array] - an array of objects containing information about the images to be replaced.  See
-     *         'buildImageReference' for a specification of the contained objects.
-     */
-    function buildImageList(opts, nodes)
-    {
-      var output = [];
-      
-      nodes.each(function() {
         var
-          timeout,
-          $this = $(this);
-        
-        if($this.attr(srcAttributeName))
+        defaultOptions = {
+            // Deprecated options
+            preloader:              false,
+            testmode:               false,
+            secure:                 false,
+            callback:               false,
+            backgroundimage:        false,
+            dumpcache:              false,
+
+            // Replacements for deprecated options
+            temporaryHoldingImage:  null,
+            forceReplacements:      false,
+            handleBackgroundImages: false,
+            additionalRequestData:  {},
+            postReplacementCallback:null,
+
+            // New options
+            remoteServerUri:        'http://svgmagic.bitlabs.nl/converter.php',
+            remoteRequestType:      'POST',
+            remoteDataType:         'json',
+            // TODO: Implement this option
+            replacementUriCreator:  null
+        },
+        untidyOptions = $.extend(defaultOptions, givenOptions),
+        options = tidyOptions(untidyOptions),
+        holdingImageTimeouts = {},
+        matchedNodes = this,
+        images = [],
+        imgElementName = 'img',
+        srcAttributeName = 'src',
+        backgroundImagePropertyName = 'background-image',
+        urlMatcher = /^url\(["']?([^"'()]+)["']?\)$/,
+        svgExtension = /\.svg$/,
+        svgDataUri = /^data:image\/svg\+xml/,
+        holdingImageTimeoutDuration = 500;
+    
+        if(shouldPerformReplacement(options))
         {
-          var result = buildImageReference($this.attr(srcAttributeName), $this, false);
-          if(result)
-          {
-            output.push(result);
-            
-            if(opts.temporaryHoldingImage)
+            getReplacementUrisFromRemoteService(options, matchedNodes);
+        }
+    
+        /**
+         * Determines whether or not image replacements should be performed.
+         * 
+         * @return [boolean] True if SVG replacements should be made, false if not.
+         */
+        function shouldPerformReplacement(opts)
+        {
+            return opts.forceReplacements || typeof document.createElement('svg').getAttributeNS !== 'function';
+        }
+    
+        /**
+         * Builds and returns an array of all of the matched image elements and 'elements which require background-image
+         * replacements'.  These objects contain a reference to the element, as well as the image URI.
+         * 
+         * @return [array] - an array of objects containing information about the images to be replaced.  See
+         *         'buildImageReference' for a specification of the contained objects.
+         */
+        function buildImageList(opts, nodes)
+        {
+            var output = [];
+      
+            nodes.each(function() {
+                var timeout, $this = $(this);
+
+                if($this.attr(srcAttributeName))
+                {
+                    var result = buildImageReference($this.attr(srcAttributeName), $this, false);
+                    if(result)
+                    {
+                        output.push(result);
+
+                        if(opts.temporaryHoldingImage)
+                        {
+                            timeout = setTimeout(function() {
+                                $this.attr(srcAttributeName, opts.temporaryHoldingImage);
+                            }, holdingImageTimeoutDuration);
+
+                            holdingImageTimeouts[output.length - 1] = timeout;
+                        }
+                    }
+                }
+
+                if(opts.handleBackgroundImages && $this.css(backgroundImagePropertyName) && $this.css(backgroundImagePropertyName) != 'none')
+                {
+                    var result = buildImageReference(urlMatcher.exec($this.css(backgroundImagePropertyName))[1], $this, true);
+                    if(result)
+                    {
+                        output.push(result);
+                    }
+                }
+            });
+      
+            return output;
+        }
+    
+        /**
+         * Builds a single image reference object, as would be returned as part of the array created by 'buildImageList'.
+         * 
+         * @return [object] An object containing information about a single SVG image to replace.
+         */
+        function buildImageReference(imageUri, element, isBackground)
+        {
+            var output = null;
+
+            if(svgExtension.test(imageUri) || svgDataUri.test(imageUri))
             {
-              timeout = setTimeout(function() {
-                $this.attr(srcAttributeName, opts.temporaryHoldingImage);
-              }, holdingImageTimeoutDuration);
-              
-              holdingImageTimeouts[output.length - 1] = timeout;
+                var tempImage = new Image();
+                tempImage.src = imageUri;
+
+                output = {
+                    element: element,
+                    isBackground: isBackground,
+                    originalUri: tempImage.src,
+                    replacementUri: null
+                };
             }
-          }
+
+            return output;
         }
-        
-        if(opts.handleBackgroundImages
-           && $this.css(backgroundImagePropertyName)
-           && $this.css(backgroundImagePropertyName) != 'none')
-        {
-          var result = buildImageReference(urlMatcher.exec($this.css(backgroundImagePropertyName))[1], $this, true);
-          if(result)
-          {
-            output.push(result);
-          }
-        }
-      });
-      
-      return output;
-    }
     
-    /**
-     * Builds a single image reference object, as would be returned as part of the array created by 'buildImageList'.
-     * 
-     * @return [object] An object containing information about a single SVG image to replace.
-     */
-    function buildImageReference(imageUri, element, isBackground)
-    {
-      var output = null;
-      
-      if(svgExtension.test(imageUri) || svgDataUri.test(imageUri))
-      {
-        var tempImage = new Image();
-        tempImage.src = imageUri;
-        
-        output = {
-          element: element,
-          isBackground: isBackground,
-          originalUri: tempImage.src,
-          replacementUri: null
-        };
-      }
-      
-      return output;
-    }
-    
-    /**
-     * The core functionality of this plugin, which makes the call to the remote service endpoint with a collection of
-     * SVG image URIs for which PNG replacements are required, and then proceeds to handle the result.
-     */
-    function getReplacementUris(opts, nodes)
-    {
-      var replacementFunction = opts.replacementUriCreator;
-      images = buildImageList(opts, nodes);
-      
-      if(images.length > 0)
-      {
-        if(replacementFunction && typeof replacementFunction == 'function')
+        /**
+         * The core functionality of this plugin, which makes the call to the remote service endpoint with a collection of
+         * SVG image URIs for which PNG replacements are required, and then proceeds to handle the result.
+         */
+        function getReplacementUris(opts, nodes)
         {
-          for(var i = 0; i < images.length; i++)
-          {
-            var image = images[i];
-            image.replacementUri = replacementFunction(image.element, image.originalUri, image.isBackground);
-          }
-          
-          performReplacements(opts);
+            var replacementFunction = opts.replacementUriCreator;
+            images = buildImageList(opts, nodes);
+
+            if(images.length > 0)
+            {
+                if(replacementFunction && typeof replacementFunction == 'function')
+                {
+                    for(var i = 0; i < images.length; i++)
+                    {
+                        var image = images[i];
+                        image.replacementUri = replacementFunction(image.element, image.originalUri, image.isBackground);
+                    }
+
+                    performReplacements(opts);
+                }
+                else
+                {
+                    performReplacements(opts);
+                }
+            }
         }
-        else
-        {
-          performRemoteApiCall(opts);
-        }
-      }
-    }
     
-    /**
-     * Gets all of the replacement image URIs from a remote server using an API call.
-     */
-    function getReplacementUrisFromRemoteService(opts)
-    {
-      var
-        sources = [],
-        data = {};
-      
-      for(var i = 0; i < images.length; i++)
-      {
-        sources.push(images[i].originalUri);
-      }
-      
-      $.extend(data, opts.additionalRequestData, { svgsources: sources });
-      
-      $.ajax({
-        dataType: opts.remoteDataType,
-        method: opts.remoteRequestType,
-        url: opts.remoteServerUri,
-        data: data,
-        success: function(response) {
-          for(var i = 0; i < images.length; i++)
-          {
+        /**
+         * Gets all of the replacement image URIs from a remote server using an API call.
+         */
+        function getReplacementUrisFromRemoteService(opts, nodes)
+        {
             var
-              image = images[i],
-              responseUri = response.results[i].url;
-            
-            image.replacementUri = responseUri;
-          }
-          
-          performReplacements(opts);
+            sources = [],
+            data = {};
+            images = buildImageList(opts, nodes);
+
+            for(var i = 0; i < images.length; i++)
+            {
+                sources.push(images[i].originalUri);
+            }
+
+            $.extend(data, opts.additionalRequestData, { svgsources: sources });
+
+            $.ajax({
+                dataType: opts.remoteDataType,
+                method: opts.remoteRequestType,
+                url: opts.remoteServerUri,
+                data: data,
+                success: function(response) {
+                    for(var i = 0; i < images.length; i++)
+                    {
+                        var
+                        image = images[i],
+                        responseUri = response.results[i].url;
+
+                        image.replacementUri = responseUri;
+                    }
+
+                    performReplacements(opts);
+                }
+            });
         }
-      });
-    }
     
-    /**
-     * Performs image replacements using the result from the remote replacement service.
-     */
-    function performReplacements(opts)
-    {
-      for(var i = 0; i < images.length; i++)
-      {
-        var image = images[i], newUri = image.replacementUri;
-        
-        if(!newUri)
+        /**
+         * Performs image replacements using the result from the remote replacement service.
+         */
+        function performReplacements(opts)
         {
-          continue;
+            for(var i = 0; i < images.length; i++)
+            {
+                var image = images[i], newUri = image.replacementUri;
+
+                if(!newUri)
+                {
+                    continue;
+                }
+                else if(!image.isBackground)
+                {
+                    if(opts.temporaryHoldingImage)
+                    {
+                        clearTimeout(holdingImageTimeouts[i]);
+                    }
+                    image.element.attr(srcAttributeName, newUri);
+                }
+                else
+                {
+                    image.element.css(backgroundImagePropertyName, 'url("' + newUri + '")');
+                }
+            }
+
+            if(opts.postReplacementCallback && typeof opts.postReplacementCallback == 'function')
+            {
+                opts.postReplacementCallback(images);
+            }
         }
-        else if(!image.isBackground)
-        {
-          if(opts.temporaryHoldingImage)
-          {
-            clearTimeout(holdingImageTimeouts[i]);
-          }
-          image.element.attr(srcAttributeName, newUri);
-        }
-        else
-        {
-          image.element.css(backgroundImagePropertyName, 'url("' + newUri + '")');
-        }
-      }
         
-      if(opts.postReplacementCallback && typeof opts.postReplacementCallback == 'function')
-      {
-        opts.postReplacementCallback(images);
-      }
-    }
-        
-    /**
-     * Tidies up an object containing options for this plugin.  Takes any deprecated options (where set) and writes
-     * them into the equivalent replacement option.
-     */
-    function tidyOptions(originalOptions)
-    {
-      if(!originalOptions.temporaryHoldingImage
-         && originalOptions.preloader
-         && typeof originalOptions.preloader == 'string')
-      {
-        originalOptions.temporaryHoldingImage = originalOptions.preloader;
-      }
-      
-      if(originalOptions.testmode && typeof originalOptions.testmode == 'boolean')
-      {
-        originalOptions.forceReplacements = true;
-      }
-      
-      if(!originalOptions.postReplacementCallback
-         && originalOptions.callback && typeof originalOptions.callback == 'function')
-      {
-        originalOptions.postReplacementCallback = function(replacedImages)
+        /**
+         * Tidies up an object containing options for this plugin.  Takes any deprecated options (where set) and writes
+         * them into the equivalent replacement option.
+         */
+        function tidyOptions(originalOptions)
         {
-          originalOptions.callback();
-        };
-      }
-      
-      if(!originalOptions.additionalRequestData['secure'])
-      {
-        originalOptions.additionalRequestData.secure = originalOptions.secure;
-      }
-      if(!originalOptions.additionalRequestData['dumpcache'])
-      {
-        originalOptions.additionalRequestData.dumpcache = originalOptions.dumpcache;
-      }
-      
-      return originalOptions;
-    }
-    
-    // Return the original jQuery object, standard jQuery behaviour.
-    return this;
-  };
+            if(!originalOptions.temporaryHoldingImage && originalOptions.preloader && typeof originalOptions.preloader == 'string')
+            {
+                originalOptions.temporaryHoldingImage = originalOptions.preloader;
+            }
+
+            if(originalOptions.testmode && typeof originalOptions.testmode == 'boolean')
+            {
+                originalOptions.forceReplacements = true;
+            }
+
+            if(!originalOptions.postReplacementCallback && originalOptions.callback && typeof originalOptions.callback == 'function')
+            {
+                originalOptions.postReplacementCallback = function(replacedImages)
+                {
+                    originalOptions.callback();
+                };
+            }
+
+            if(!originalOptions.additionalRequestData['secure'])
+            {
+                originalOptions.additionalRequestData.secure = originalOptions.secure;
+            }
+            if(!originalOptions.additionalRequestData['dumpcache'])
+            {
+                originalOptions.additionalRequestData.dumpcache = originalOptions.dumpcache;
+            }
+
+            return originalOptions;
+        }
+
+        // Return the original jQuery object, standard jQuery behaviour.
+        return this;
+    };
 }(jQuery));
