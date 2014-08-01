@@ -62,11 +62,11 @@
                 $("img.seconddemo").svgmagic({
                     forceReplacements: true, 
                     temporaryHoldingImage: "./style/ajax-loader.gif",
-                    additionalRequestData: modesecure,
+                    additionalRequestData: {secure: modesecure},
                     postReplacementCallback: placeTime
                 });
                 
-                var securestring = (modesecure == undefined || !modesecure) ? {secure: false} : {secure: true};
+                var securestring = (modesecure == undefined || !modesecure) ? "{secure: false}" : "{secure: true}";
                 $("code .securedynamic").html(securestring);
             }
             
@@ -129,7 +129,7 @@
                 <p>In the first demo we used one image. SVGMagic can ofcourse replace multiple images at the same time. In the demo below we added some extra SVG images. Click on the button to start the script. We also added an extra parameter to the options that shows a temporaryHoldingImage on the place of the images if replacing takes to long.</p>
                 <p>
                     <a href='#' onclick='replaceDemoImages(false);return false;' class='button'>Start SVGMagic (normal)</a>
-                    <a href='#' onclick='replaceDemoImages(true);return false;' class='button'>Start SVGMagic (additionalRequestData)</a>
+                    <a href='#' onclick='replaceDemoImages(true);return false;' class='button'>Start SVGMagic (secure)</a>
                     <a href='#' onclick='resetImages();return false;' class='button'>Reset images to SVG</a>
                 </p>
                 <p style='margin: 30px 0;' id="resize">
