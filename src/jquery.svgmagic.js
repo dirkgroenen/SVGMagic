@@ -341,7 +341,7 @@
     /**
      * Gets all of the replacement image URIs from a remote server using an API call.
      */
-    function getReplacementUrisFromRemoteService(opts)
+    function getReplacementUrisFromRemoteService(opts, nodes)
     {
       var
         sources = [],
