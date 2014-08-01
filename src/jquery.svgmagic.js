@@ -333,7 +333,7 @@
         }
         else
         {
-          performRemoteApiCall(opts);
+          performReplacements(opts);
         }
       }
     }
