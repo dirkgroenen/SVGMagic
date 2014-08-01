@@ -11,8 +11,8 @@
         
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-        <script src="./jquery.svgmagic.js"></script>
-        <script src="./html5shiv.js"></script>
+        <script src="./src/jquery.svgmagic.js"></script>
+        <script src="./src/html5shiv.js"></script>
          
         <meta property="og:title" content="SVGMagic - Great jQuery SVG fallback plugin">
         <meta property="og:description" content="It's a simple jQuery plugin that searchs for SVG images on your website and creates PNG versions on the run. Meaning that you don't have to create different versions of the images yourself.">
@@ -27,7 +27,7 @@
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          })(window,document,'script','.//www.google-analytics.com/analytics.js','ga');
 
           ga('create', 'UA-23792910-13', 'bitlabs.nl');
           ga('send', 'pageview');
@@ -60,10 +60,10 @@
         </script>
         <header id="main">
             <div class='centercontent'>
-                <div id="logo" itemscope="name"><a href='/'>SVGMagic</a> <div class='sub'>Great jQuery SVG fallback</div></div>
+                <div id="logo" itemscope="name"><a href='./'>SVGMagic</a> <div class='sub'>Great jQuery SVG fallback</div></div>
                 <menu>
                     <ul>
-                        <li><a href='/demo.html'>Demo</a></li>
+                        <li><a href='./demo.html'>Demo</a></li>
                         <li><a href='https://github.com/dirkgroenen/SVGMagic' target='_blank'>Github</a></li>
                         <li><a itemscope="codeRepository" href='https://raw.githubusercontent.com/dirkgroenen/SVGMagic/master/src/SVGMagic.js' target='_blank'>Direct download</a></li>
                     </ul>
@@ -76,7 +76,7 @@
                 <h1>SVGMagic is a SVG fallback that does it all</h1>
                 <p>SVGMagic is a simple jQuery plugin that searchs for SVG images (including background-images) on your website and <u>creates</u> PNG versions if the browser doesn't support SVG.</p>
                 <p>Wondering why you should use SVG images? SVG images are vector based! Meaning that they will be as sharp as hell no matter how big they are. In other words: one file for every size. <b>See it yourself:</b> (assuming you are now using a browser that understands SVG images)</p>
-                <p style='margin: 30px 0;' id="resize"><img src='/style/resizeicon.svg' class='resize'><br/><a href='#' onclick="$('img.resize').animate({height: '50px', width: '50px'});return false;">50%</a> <a href='#' onclick="$('img.resize').animate({height: '108px', width: '108px'});return false;">100%</a> <a href='#' onclick="$('img.resize').animate({height: '250px', width: '250px'});return false;">250%</a></p>
+                <p style='margin: 30px 0;' id="resize"><img src='./style/resizeicon.svg' class='resize'><br/><a href='#' onclick="$('img.resize').animate({height: '50px', width: '50px'});return false;">50%</a> <a href='#' onclick="$('img.resize').animate({height: '108px', width: '108px'});return false;">100%</a> <a href='#' onclick="$('img.resize').animate({height: '250px', width: '250px'});return false;">250%</a></p>
                 
                 <h1>Cool, but what do I do?</h1>
                 <p>That's where the fine part comes in: almost nothing! Just download the <a href='https://raw.github.com/dirkgroenen/SVGMagic/master/src/SVGMagic.min.js' target='_blank'>SVGMagic.js</a> script include it and initialize it.</p>
@@ -104,10 +104,10 @@
                 </div>
                 
                 <h2>Site to server to site, how about performance?</h2>
-                <p>The server is fast. Assuming that the images you are using aren't big the user will barely know what's happening. We have added a demo with duration logger on the <a href='/demo.html#bottom'>demo page</a>.</p>
+                <p>The server is fast. Assuming that the images you are using aren't big the user will barely know what's happening. We have added a demo with duration logger on the <a href='./demo.html#bottom'>demo page</a>.</p>
                 
                 <h1>Check it yourself</h1>
-                <p>You can find a demo (including the code) on <a href='/demo.html'>this page</a>. Normally the script only runs in browsers that don't support SVG images, but in the demo it will run on every browser.</p>
+                <p>You can find a demo (including the code) on <a href='./demo.html'>this page</a>. Normally the script only runs in browsers that don't support SVG images, but in the demo it will run on every browser.</p>
                 
                 <h1>Problems, or just a question?</h1>
                 <p>Having a question or is SVGMagic not functioning as you expected? Use the <a href='https://github.com/dirkgroenen/SVGMagic/issues' target='_blank'>issues page</a> at Github.</p>

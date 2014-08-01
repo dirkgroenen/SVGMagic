@@ -6,25 +6,28 @@
         <meta name="keywords" content="jquery,plugin,SVG,fallback,images,PNG,demo">
         <meta name="robots" content="index,follow">
         
-        <link rel="shortcut icon" type="image/svg" href="/favicon.svg">
-        <link rel="shortcut icon" type="image/png" href="/favicon.png">
+        <link rel="shortcut icon" type="image/svg" href="./favicon.svg">
+        <link rel="shortcut icon" type="image/png" href="./favicon.png">
         
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="./src/jquery.svgmagic.js"></script>
+        <script src="./src/html5shiv.js"></script>
+         
         <meta property="og:title" content="SVGMagic - Great jQuery SVG fallback plugin">
         <meta property="og:description" content="It's a simple jQuery plugin that searchs for SVG images on your website and creates PNG versions on the run. Meaning that you don't have to create different versions of the images yourself.">
         <meta property="og:url" content="http://svgmagic.bitlabs.nl/">
         <meta property="og:site_name" content="SVGMagic - jQuery SVG fallback">
-        <meta property="og:image" content="/svgmagic_fb.png">
-        
-        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-        <script src="/SVGMagic.min.js"></script>
-        <script src="/html5shiv.js"></script>
+        <meta property='og:image' content="http://svgmagic.bitlabs.nl/svgmagic_fb.png">
+        <meta property="og:type" content="website" />
+        <meta property="fb:admins" content="1493294124" />
+        <meta property="fb:app_id" content="462401843842149" />
         
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          })(window,document,'script','.//www.google-analytics.com/analytics.js','ga');
 
           ga('create', 'UA-23792910-13', 'bitlabs.nl');
           ga('send', 'pageview');
@@ -47,7 +50,7 @@
             
             function resetImages(){
                 $('img.seconddemo').each(function(i){
-                    $(this).attr('src', '/style/resizeicon_'+(i+1)+'.svg');
+                    $(this).attr('src', './style/resizeicon_'+(i+1)+'.svg');
                 });
                 $("#duration .dynamic").html(0);
             }
@@ -91,10 +94,10 @@
         </script>
         <header id="main">
             <div class='centercontent'>
-                <div id="logo"><a href='/'>SVGMagic</a> <div class='sub'>Demo page</div></div>
+                <div id="logo"><a href='./'>SVGMagic</a> <div class='sub'>Demo page</div></div>
                 <menu>
                     <ul>
-                        <li><a href='/'>Home</a></li>
+                        <li><a href='./'>Home</a></li>
                         <li><a href='https://github.com/dirkgroenen/SVGMagic' target='_blank'>Github</a></li>
                         <li><a href='https://raw.githubusercontent.com/dirkgroenen/SVGMagic/master/src/SVGMagic.js' target='_blank'>Direct download</a></li>
                     </ul>
@@ -106,7 +109,7 @@
             <div class='centercontent'>
                 <h1>SVGMagic demo page</h1>
                 <p>The images on this page are all SVG files. SVGMagic normally only replaces that images if your browser doesn't support SVG files, but on this demo page it will run in every browser. Have you noticed that it replaced the images? No? Good!</p>
-                <p style='margin: 30px 0;' id="resize"><img class='replace' src='/style/resizeicon.svg' class='resize'> <img src='/style/resizeicon.svg' class='resize'></p>
+                <p style='margin: 30px 0;' id="resize"><img class='replace' src='./style/resizeicon.svg' class='resize'> <img src='./style/resizeicon.svg' class='resize'></p>
                 <p id="resize"><a href='#' onclick="$('img').animate({height: '50px', width: '50px'});return false;">50%</a> <a href='#' onclick="$('img').animate({height: '108px', width: '108px'});return false;">100%</a> <a href='#' onclick="$('img').animate({height: '250px', width: '250px'});return false;">250%</a></p>
                 <p>If you use the buttons above you will see that the image on the left has been replaced by a PNG image. The image on the right is the original vector image (assuming you are now using a browser that does support SVG images).</p>
                 <h2 style='margin-bottom: 10px;'>Code used</h2>
@@ -130,11 +133,11 @@
                     <a href='#' onclick='resetImages();return false;' class='button'>Reset images to SVG</a>
                 </p>
                 <p style='margin: 30px 0;' id="resize">
-                    <img class='seconddemo' src='/style/resizeicon_1.svg'>
-                    <img class='seconddemo' src='/style/resizeicon_2.svg'>
-                    <img class='seconddemo' src='/style/resizeicon_3.svg'>
-                    <img class='seconddemo' src='/style/resizeicon_4.svg'>
-                    <img class='seconddemo' src='/style/resizeicon_5.svg'>
+                    <img class='seconddemo' src='./style/resizeicon_1.svg'>
+                    <img class='seconddemo' src='./style/resizeicon_2.svg'>
+                    <img class='seconddemo' src='./style/resizeicon_3.svg'>
+                    <img class='seconddemo' src='./style/resizeicon_4.svg'>
+                    <img class='seconddemo' src='./style/resizeicon_5.svg'>
                 </p>
                 <p id="resize"><a href='#' onclick="$('img.seconddemo').animate({height: '50px', width: '50px'});return false;">50%</a> <a href='#' onclick="$('img.seconddemo').animate({height: '108px', width: '108px'});return false;">100%</a> <a href='#' onclick="$('img.seconddemo').animate({height: '250px', width: '250px'});return false;">250%</a></p>
                 <p id="duration">Runtime: <span class='dynamic'>0</span> MS</p>
