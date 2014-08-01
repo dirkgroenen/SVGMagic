@@ -27,7 +27,7 @@
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
           ga('create', 'UA-23792910-13', 'bitlabs.nl');
           ga('send', 'pageview');
@@ -37,7 +37,7 @@
         <script>
             $(document).ready(function(){
                 $('img').svgmagic({
-                    secure: true
+                    additionalRequestData: {secure: true}
                 });
             });
         </script>
@@ -65,7 +65,7 @@
                     <ul>
                         <li><a href='./demo.html'>Demo</a></li>
                         <li><a href='https://github.com/dirkgroenen/SVGMagic' target='_blank'>Github</a></li>
-                        <li><a itemscope="codeRepository" href='https://raw.githubusercontent.com/dirkgroenen/SVGMagic/master/src/SVGMagic.js' target='_blank'>Direct download</a></li>
+                        <li><a itemscope="codeRepository" href='https://raw.githubusercontent.com/dirkgroenen/SVGMagic/master/src/jquery.svgmagic.js' target='_blank'>Direct download</a></li>
                     </ul>
                 </menu>
             </div>
