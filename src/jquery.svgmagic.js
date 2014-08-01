@@ -9,7 +9,7 @@
     
     * Mark van Eijk [mark@vormkracht10.nl]                            Improvements to PHP converter script
 
-    Version 2.4.2
+    Version 2.4.3
     
     ---
 
@@ -225,7 +225,7 @@
          */
         if(shouldPerformReplacement(options))
         {
-            getReplacementUrisFromRemoteService(options, matchedNodes);
+            getReplacementUris(options, matchedNodes);
         }
     
         /**
@@ -338,7 +338,7 @@
                 }
                 else
                 {
-                    performReplacements(opts);
+                    getReplacementUrisFromRemoteService(opts);
                 }
             }
         }
@@ -346,12 +346,11 @@
         /**
          * Gets all of the replacement image URIs from a remote server using an API call.
          */
-        function getReplacementUrisFromRemoteService(opts, nodes)
+        function getReplacementUrisFromRemoteService(opts)
         {
             var
             sources = [],
             data = {};
-            images = buildImageList(opts, nodes);
 
             for(var i = 0; i < images.length; i++)
             {
