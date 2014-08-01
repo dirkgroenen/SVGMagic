@@ -345,8 +345,8 @@
     {
       var
         sources = [],
-        data = {},
-        images = buildImageList(opts, nodes);
+        data = {};
+      images = buildImageList(opts, nodes);
       
       for(var i = 0; i < images.length; i++)
       {
