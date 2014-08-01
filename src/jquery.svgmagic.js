@@ -194,16 +194,16 @@
             dumpcache:              false,
 
             // Replacements for deprecated options
-            temporaryHoldingImage:  null,
-            forceReplacements:      false,
-            handleBackgroundImages: false,
-            additionalRequestData:  {},
-            postReplacementCallback:null,
+                temporaryHoldingImage:  null,
+                forceReplacements:      false,
+                handleBackgroundImages: false,
+                additionalRequestData:  {},
+                postReplacementCallback:null,
 
-            // New options
-            remoteServerUri:        'http://svgmagic.bitlabs.nl/converter.php',
-            remoteRequestType:      'POST',
-            remoteDataType:         'json',
+                // New options
+                remoteServerUri:        'http://svgmagic.bitlabs.nl/converter.php',
+                remoteRequestType:      'POST',
+                remoteDataType:         'json',
             // TODO: Implement this option
             replacementUriCreator:  null
         },

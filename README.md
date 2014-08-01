@@ -30,7 +30,7 @@ SVGMagic also supports backgroundimages. You need to parse the div containing th
 <script>
 	$(document).ready(function(){
 		$('.bgimage').svgmagic({
-            backgroundimage: true
+            handleBackgroundImages: true
         });
 	});
 </script>
@@ -41,14 +41,22 @@ Options
 You can parse an options object into SVGMagic. Currently it supports the following options:
 ```code
 $('img').svgmagic({
-    preloader: {url-to-preloader/false}, // Preloader before the image gets replaced, default: false
-    testmode: {false/true}, // SVGMagic works in every browser if set to true, default: false
-    secure: {false/true}, // Images are sent via https:// if set to true, default: false
-    backgroundimage: {false/true}, // Check given div for backgroundimages, default: false
-    callback: {false/function} // Function to run after images are changed, default: false
-    dumpcache: {false/true} // Force to remove the cache and create a new .PNg, default: false
+    temporaryHoldingImage:  null, // Image that will appear when an image gets converted
+    forceReplacements:      false, // Force replacement in all browsers
+    handleBackgroundImages: false, // Search the dom for CSS background images
+    additionalRequestData:  {}, // Add extra data to the ajax request. 
+    postReplacementCallback:null, // Function to run before replacement
+
+    // New options
+    remoteServerUri:        'http://svgmagic.bitlabs.nl/converter.php', // Uri of the (remote) API script
+    remoteRequestType:      'POST', // Request type for the API call
+    remoteDataType:         'json', // Data type for the API call
 });
 ```
+
+additionalRequestData
+-------
+The ```additionalRequestData``` option gives you the posibility to add extra data to the ajax request. The default API script supports two extra options: ```secure: true``` and ```dumpcache```. 
 
 Support
 -------
