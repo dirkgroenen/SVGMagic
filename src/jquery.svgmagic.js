@@ -222,7 +222,11 @@
     
     if(shouldPerformReplacement(options))
     {
+        console.log("yes");
       getReplacementUris(options, matchedNodes);
+    }
+    else{
+        console.log("no");
     }
     
     /**
