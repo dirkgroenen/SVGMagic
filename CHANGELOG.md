@@ -1,4 +1,4 @@
-Craigfowler's fork has been merged which brings some changes in how we should use SVGmagic. Below you can find a list of all changes.
+[Craigfowler's fork](https://github.com/craigfowler/SVGMagic) has been merged which brings some changes in how we should use SVGmagic. Below you can find a list of all changes.
 
 ###V2.3.2 > V2.4.0
     New features: 
