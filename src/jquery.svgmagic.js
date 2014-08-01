@@ -222,11 +222,7 @@
     
     if(shouldPerformReplacement(options))
     {
-        console.log("yes");
       getReplacementUris(options, matchedNodes);
-    }
-    else{
-        console.log("no");
     }
     
     /**
@@ -322,7 +318,7 @@
     {
       var replacementFunction = opts.replacementUriCreator;
       images = buildImageList(opts, nodes);
-      
+
       if(images.length > 0)
       {
         if(replacementFunction && typeof replacementFunction == 'function')
