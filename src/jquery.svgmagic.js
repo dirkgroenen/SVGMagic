@@ -222,7 +222,7 @@
     
     if(shouldPerformReplacement(options))
     {
-      getReplacementUrisFromRemoteServer(options, matchedNodes);
+      getReplacementUrisFromRemoteService(options, matchedNodes);
     }
     
     /**
