@@ -27,7 +27,7 @@
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          })(window,document,'script','.//www.google-analytics.com/analytics.js','ga');
 
           ga('create', 'UA-23792910-13', 'bitlabs.nl');
           ga('send', 'pageview');
@@ -61,7 +61,7 @@
                 startTime = new Date().getTime();
                 $("img.seconddemo").svgmagic({
                     forceReplacements: true, 
-                    temporaryHoldingImage: "/style/ajax-loader.gif",
+                    temporaryHoldingImage: "./style/ajax-loader.gif",
                     additionalRequestData: modesecure,
                     postReplacementCallback: placeTime
                 });
@@ -78,7 +78,7 @@
         
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700' rel='stylesheet' type='text/css'>
-        <link href="/style/style.css" rel="stylesheet" type="text/css">
+        <link href="./style/style.css" rel="stylesheet" type="text/css">
     </head>
     
     <body>
@@ -88,7 +88,7 @@
               var js, fjs = d.getElementsByTagName(s)[0];
               if (d.getElementById(id)) return;
               js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/nl_NL/all.js#xfbml=1&appId=462401843842149";
+              js.src = ".//connect.facebook.net/nl_NL/all.js#xfbml=1&appId=462401843842149";
               fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
@@ -145,7 +145,7 @@
                 <code>
                  $('img.seconddemo').svgmagic({<br/>
                  &nbsp;&nbsp;&nbsp;forceReplacements: true,<br/>
-                 &nbsp;&nbsp;&nbsp;temporaryHoldingImage: "/style/ajax-loader.gif",<br/>
+                 &nbsp;&nbsp;&nbsp;temporaryHoldingImage: "./style/ajax-loader.gif",<br/>
                  &nbsp;&nbsp;&nbsp;additionalRequestData: <span class='securedynamic'>{secure: true/false}</span>,<br/>
                  &nbsp;&nbsp;&nbsp;postReplacementCallback: placeTime<br/>
                  });
