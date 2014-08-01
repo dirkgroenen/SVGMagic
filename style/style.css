@@ -1,0 +1,344 @@
+body,html{
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    color: #4F4E57;
+    width: 100%;
+    height: 100%;
+    background: #ebe8e5;
+}
+
+::selection
+{
+    color: white;
+    background: #EA3556;
+    text-shadow: none;
+}
+::-moz-selection
+{
+    color: white;
+    background: #EA3556;
+    text-shadow: none;
+}
+
+*{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+a img, img a{
+    border: none;
+}
+
+a{
+    color: #4F4E57;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+a:hover{
+    color: #EA3556;
+}
+
+.centercontent{
+    width: 1000px;
+    left: 50%;
+    margin-left: -500px;
+    position: relative;
+}
+
+header#main{
+    position: fixed;
+    z-index: 50;
+    left: 0;
+    width: 100%;
+    color: white;
+    font-size: 16px;
+    padding: 15px 0;
+    font-weight: bold;
+    background-color: #EA3556;
+    border-bottom: 1px solid white;
+}
+
+header#main #logo {
+    font-size: 25px;
+}
+
+header#main #logo a{
+    color: white;
+    font-weight: bold;
+}
+
+header#main #logo .sub{
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 100;
+    margin-left: 5px;
+}
+
+header#main menu{
+   margin: 0;
+   padding: 0;
+   position: absolute;
+   right: 0;
+   top: 3px;
+}
+
+header#main menu ul{
+    margin: 0;
+    padding: 0;
+}
+
+header#main menu ul li{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+header#main menu ul li a{
+    display: block;
+    font-size: 16px;
+    font-weight: 300;
+    color: #EA3556;
+    padding: 3px 10px;
+    background: rgba(255,255,255,0.9);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+header#main menu ul li a:hover{
+    background: rgba(255,255,255,0.8);
+}
+
+section#middle{
+    min-height: 97%;
+    padding-top: 125px;
+    padding-bottom: 50px;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 28px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    text-shadow: 0 1px 0 rgba(255,255,255,.7);
+}
+
+section #resize a,.button{
+    display: inline-block;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-align: left;
+    background: #e1dedb;
+    border: 1px solid #d3d0cd;
+    padding: 0px 7px;
+    font-size: 16px;
+}
+
+section h1{
+    font-size: 35px;
+    line-height: 39px;
+    font-weight: 400;
+    width: 100%;
+    margin-bottom: 10px;
+}  
+
+section h2{
+    font-size: 28px;
+    line-height: 39px;
+    font-weight: 400;
+    width: 100%;
+    margin-bottom: -10px;
+}
+
+section#bottom{
+    border-top: 1px solid #f5f0ef;
+    background: #e2dfdd;
+    min-height: 100%;
+    padding-top: 75px;
+    padding-bottom: 50px;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 27px;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255,255,255,.7);
+}
+
+section#bottom #walkthrough{
+    position: relative;
+    height: 180px;
+}
+
+section#bottom #walkthrough .server{
+    position: absolute;
+    top: 0;
+    right: 50px;
+    z-index: 5;
+    background: url('/style/server.png') no-repeat;
+    height: 152px;
+    width: 151px;
+}
+
+section#bottom #walkthrough .line{
+    position: absolute;
+    top: 80px;
+    left: 100px;
+    right: 100px;
+    height: 2px; 
+    background: #EA3556 url('/style/line.png') repeat-x;
+    z-index: 1;
+}
+
+section#bottom #walkthrough .linebullet{
+    background: #EA3556;
+    height: 11px;
+    width: 11px;
+    overflow: hidden;
+    -webkit-border-radius: 999px;
+    -moz-border-radius: 999px;
+    border-radius: 999px;
+    box-shadow: 0 0 2px rgba(255,255,255,.8);
+    top: 75px;
+    left: 200px;
+    z-index: 4;
+    position: absolute;
+    animation-duration: 5s;
+    animation-name: bulletmove;  
+    animation-iteration-count: infinite;
+    -webkit-animation-duration: 5s;
+    -webkit-animation-name: bulletmove;
+    -webkit-animation-iteration-count: infinite; 
+    -moz-animation-duration: 5s;
+    -moz-animation-name: bulletmove;  
+    -moz-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear; 
+    -moz-animation-timing-function: linear; 
+}
+
+section#bottom #walkthrough .browser{
+    position: absolute;
+    left: 50px;
+    top: 0;
+    z-index: 5;
+    background-image: url('/style/browser.png');
+    background-repeat: no-repeat;
+    height: 152px;
+    width: 234px;
+}
+
+footer .copy{
+    position: fixed;
+    right: 10px;
+    bottom: 5px;
+}
+
+footer .copy a{
+    font-size: 12px;
+    font-weight: 300; 
+}
+
+footer .fb-like{
+    position: fixed;
+    top: 70px;
+    left: 10px;
+}
+
+code{
+    display: block;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-align: left;
+    background: #e1dedb;
+    border: 1px solid #d3d0cd;
+    font-size: 15px;
+    padding: 5px 10px;
+} 
+
+#bgdemo{
+    overflow:hidden;
+    background-image: url("/style/resizeicon.svg");
+    height:108px;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size: auto 100%;
+    color:white;
+    text-shadow:0 0px 2px rgba(0,0,0,.8);
+    padding-top:10px;
+}
+
+@keyframes bulletmove {
+    0%,100%{
+        left: 200px;
+    }
+    50%{
+        left: 815px;
+    }
+}
+@-webkit-keyframes bulletmove {
+    0%,100%{
+        left: 200px;
+    }
+    50%{
+        left: 815px;
+    }
+}
+@-moz-keyframes bulletmove {
+    0%,100%{
+        left: 200px;
+    }
+    50%{
+        left: 815px;
+    }
+}
+
+@media all and (max-width: 1000px){
+    .centercontent{
+        width: 100%;
+        left: 0%;
+        margin-left: 0px;
+        padding: 0 10px;
+        position: static;
+    }
+    
+    section#middle{
+        padding-top: 50px;
+        padding-bottom: 10px;
+    }
+    
+    section#bottom #walkthrough{
+        display: none;
+    }
+    
+     header#main menu{
+           top: 17px;
+     }
+    
+    footer .fb-like{
+        display: none;
+    }
+}
+
+@media all and (max-width: 600px){
+
+    header#main menu{
+        display: none;
+    }   
+
+    footer .copy{
+        display: none;
+    }
+    
+    header#main #logo .sub{
+        font-size: 17px;
+    }
+    
+    header#main #logo {
+        font-size: 20px;
+    }
+}
