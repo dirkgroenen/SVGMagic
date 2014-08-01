@@ -7,7 +7,7 @@
         "fallback",
         "image"
     ],
-    "version": "2.2.0",
+    "version": "2.4.3",
     "author": {
         "name": "Bitlabs Development",
         "url": "https://bitlabs.nl"
@@ -25,8 +25,8 @@
             "url": "https://github.com/dirkgroenen/SVGMagic/blob/master/LICENSE.md"
         }
     ],
-    "homepage": "http://svgmagic.bitlabs.nl",
-    "docs": "http://svgmagic.bitlabs.nl",
+    "homepage": "http://dirkgroenen.github.io/SVGmagic",
+    "docs": "http://dirkgroenen.github.io/SVGmagic",
     "dependencies": {
         "jquery": ">=1"
     }
