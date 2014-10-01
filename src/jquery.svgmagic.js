@@ -9,7 +9,7 @@
     
     * Mark van Eijk [mark@vormkracht10.nl]                            Improvements to PHP converter script
 
-    Version 2.4.4
+    Version 2.4.5
     
     ---
 
@@ -194,16 +194,17 @@
             dumpcache:              false,
 
             // Replacements for deprecated options
-                temporaryHoldingImage:  null,
-                forceReplacements:      false,
-                handleBackgroundImages: false,
-                additionalRequestData:  {},
-                postReplacementCallback:null,
+			temporaryHoldingImage:  null,
+			forceReplacements:      false,
+			handleBackgroundImages: false,
+			additionalRequestData:  {},
+			postReplacementCallback:null,
 
-                // New options
-                remoteServerUri:        'http://svgmagic.bitlabs.nl/converter.php',
-                remoteRequestType:      'POST',
-                remoteDataType:         'jsonp',
+			// New options
+			remoteServerUri:        'http://bitlabs.nl/svgmagic/converter.php',
+			remoteRequestType:      'POST',
+			remoteDataType:         'jsonp',
+			
             // TODO: Implement this option
             replacementUriCreator:  null
         },
@@ -220,6 +221,14 @@
         svgDataUri = /^data:image\/svg\+xml/,
         holdingImageTimeoutDuration = 500;
     
+		/**
+		 * Check if the remoteServerUri has to be replaced with https
+		 */
+		if(window.location.protocol == "https:" || options.additionalRequestData.secure)
+		{
+			options.remoteServerUri = options.remoteServerUri.replace("http://", "https://");
+		}
+	
         /**
          * The place where all magic starts
          */
