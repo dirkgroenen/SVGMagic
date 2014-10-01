@@ -1,0 +1,33 @@
+{
+    "name": "svgmagic",
+    "title": "jQuery SVGMagic",
+    "description": "A simple jQuery plugin that creates a fallback for .SVG images (backgroundimage supported to!). In case your browser doesn't support .SVG images it will create a .PNG file and replace the .SVG with it. This means that you don't have to create two versions of your images to support IE8 and lower.",
+    "keywords": [
+        "SVG",
+        "fallback",
+        "image"
+    ],
+    "version": "2.4.3",
+    "author": {
+        "name": "Bitlabs Development",
+        "url": "https://bitlabs.nl"
+    },
+    "maintainers": [
+        {
+            "name": "Dirk Groenen",
+            "email": "dirk@bitlabs.nl",
+            "url": "https://github.com/dirkgroenen"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "GNU v3",
+            "url": "https://github.com/dirkgroenen/SVGMagic/blob/master/LICENSE.md"
+        }
+    ],
+    "homepage": "http://dirkgroenen.github.io/SVGmagic",
+    "docs": "http://dirkgroenen.github.io/SVGmagic",
+    "dependencies": {
+        "jquery": ">=1"
+    }
+}
