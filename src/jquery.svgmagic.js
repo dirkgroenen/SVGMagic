@@ -9,7 +9,7 @@
     
     * Mark van Eijk [mark@vormkracht10.nl]                            Improvements to PHP converter script
 
-    Version 2.4.3
+    Version 2.4.4
     
     ---
 
@@ -203,7 +203,7 @@
                 // New options
                 remoteServerUri:        'http://svgmagic.bitlabs.nl/converter.php',
                 remoteRequestType:      'POST',
-                remoteDataType:         'json',
+                remoteDataType:         'jsonp',
             // TODO: Implement this option
             replacementUriCreator:  null
         },
