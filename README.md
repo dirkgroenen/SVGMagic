@@ -50,7 +50,7 @@ $('img').svgmagic({
     // New options
     remoteServerUri:        'http://svgmagic.bitlabs.nl/converter.php', // Uri of the (remote) API script
     remoteRequestType:      'POST', // Request type for the API call
-    remoteDataType:         'json', // Data type for the API call
+    remoteDataType:         'jsonp', // Data type for the API call
 });
 ```
 
