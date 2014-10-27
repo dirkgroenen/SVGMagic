@@ -27,8 +27,9 @@
 class Converter {
 
     private $origin;
-    private $rootdirectory = "images/results";
+    private $rootdirectory = "../images/results";
     private $sitedirectory;
+    private $publicurl;
     private $imageurls;
     private $domain;
     private $response;
@@ -67,6 +68,8 @@ class Converter {
         if(!file_exists($this->rootdirectory . "/" . $this->origin)){
             mkdir($this->sitedirectory, 0777);
         }
+
+        $this->publicurl = $this->domain . "/images/results/" . $this->origin;
     }
 
     /*
@@ -76,11 +79,13 @@ class Converter {
     {
         // Loop through all the images and add the response to the global response
         foreach($this->imageurls as $srcimage){
-            $image = $this->convert($srcimage, true);
+            $image = $this->convert($srcimage, $dumpcache);
 
             // Check if response contains an error
-            if($image["error"])
+            if($image["error"]){
                 $this->response["error"] = true;
+                $this->response["msg"] = "Not all images have been converted.";
+            }
 
             // Add response to array
             if($this->version >= 2.5)
@@ -119,48 +124,50 @@ class Converter {
             $response["filename"] = $filename;
         }
 
+        // Check if file already exists
+        if(file_exists($this->sitedirectory . '/' . $filename . '.png')){
+            $response["image"] = $this->publicurl . "/" . $filename . ".png";
+            return $response;  // Kill and return response
+        }
         
         // Check if we can reach the provided URL
         // return the response when the image can't be reached
-        if($response["type"] == "url" && ($this->checksrcurl($srcimage) > 300 || (bool)$this->checksrcurl($srcimage) == false)){
-            $response["error"]  = true;
-            $response["msg"]    = "Couldn't download image from provided URL";
+        if($response["type"] == "url"){
+            $check = $this->checksrcurl($srcimage);
+            
+            if($check > 300 || $check == false){
+                $response["error"]  = true;
+                $response["msg"]    = "Couldn't download image from provided URL";
 
-            return $response;  
+                return $response;  // Kill and return response
+            }
         }
 
         // download the image if given srcimage is an url
         if($response["type"] == "url")
             $srcimage = file_get_contents($srcimage);
 
-        // Check if file already exists
-        if(file_exists($this->sitedirectory . '/' . $filename . '.png')){
-            $response["image"] = $this->domain . "/" . $this->sitedirectory . "/" . $filename . ".png";
+        // Convert $srcimage to PNG
+        try{
+            $desimage = new Imagick();
+            $desimage->setBackgroundColor(new ImagickPixel('transparent'));
+            $desimage->readImageBlob( $srcimage );
+            $desimage->setImageFormat("png32");
+            $desimage->setImageCompressionQuality(100);
+
+            // Remove if dumpcache is enabled
+            if($force && file_exists($this->sitedirectory . '/' . $filename . '.png'))
+                unlink($this->sitedirectory . '/' . $filename . '.png');
+
+            // Save the file
+            file_put_contents($this->sitedirectory . '/' . $filename . '.png', $desimage);
+
+            // Set the URL where the PNG can be viewed from
+            $response["image"] = $this->publicurl . "/" . $filename . ".png";
         }
-        else{
-            // Convert $srcimage to PNG
-            try{
-                $desimage = new Imagick();
-                $desimage->setBackgroundColor(new ImagickPixel('transparent'));
-                $desimage->readImageBlob( $srcimage );
-                $desimage->setImageFormat("png32");
-                $desimage->setImageCompressionQuality(100);
-
-                // Remove if dumpcache is enabled
-                if($force && file_exists($this->sitedirectory . '/' . $filename . '.png'))
-                    unlink($this->sitedirectory . '/' . $filename . '.png');
-
-                // Save the file
-                file_put_contents($this->sitedirectory . '/' . $filename . '.png', $desimage);
-
-                // Set the URL where the PNG can be viewed from
-                $response["image"] = $this->domain . "/" . $this->sitedirectory . "/" . $filename . ".png";
-            }
-            catch(ImagickException $e){
-                $response["error"]  = true;
-                $response["msg"]    = $e->getMessage();
-            }
-            
+        catch(ImagickException $e){
+            $response["error"]  = true;
+            $response["msg"]    = $e->getMessage();
         }
         
         // Return response
