@@ -46,11 +46,7 @@
     $dumpcache = (isset($_REQUEST["dumpcache"])) ? $_REQUEST["dumpcache"] : false;
     $serverdomain = ($_REQUEST["secure"] == 'false') ? 'http://bitlabs.nl/svgmagic' : 'https://bitlabs.nl/svgmagic';
     $version = (!isset($_REQUEST["version"])) ? 2.4 : $_REQUEST["version"];
-
-    /*
-     * Get the request origin
-     */
-    $origin = (isset($_SERVER['HTTP_ORIGIN'])) ? $_SERVER['HTTP_ORIGIN'] : "undefined";
+    $origin = (isset($_REQUEST["origin"])) ? isset($_REQUEST["origin"]) : "undefined";
 
     /* 
      * Init converter 
@@ -62,7 +58,7 @@
      * Set status code if needed
      */
     if($result["error"] == true)
-        http_response_code(206);
+        http_response_code(413);
 
     /*
      * Show results
