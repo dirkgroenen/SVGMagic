@@ -6,7 +6,7 @@
     
     * Dirk Groenen [Bitlabs Development - dirk@bitlabs.nl]            Original author
 
-    Version 2.5
+    Version 3.0
     
     ---
 
@@ -44,7 +44,7 @@
      */
     $svgsources = (isset($_REQUEST["svgsources"])) ? $_REQUEST["svgsources"] : null;
     $dumpcache = (isset($_REQUEST["dumpcache"])) ? $_REQUEST["dumpcache"] : false;
-    $serverdomain = ($_REQUEST["secure"] == 'false') ? 'http://bitlabs.nl/svgmagic' : 'https://bitlabs.nl/svgmagic';
+    $serverdomain = ($_REQUEST["secure"] == 'true' || isset($_SERVER['HTTPS'])) ? 'https://bitlabs.nl/svgmagic' : 'http://bitlabs.nl/svgmagic';
     $version = (!isset($_REQUEST["version"])) ? 2.4 : $_REQUEST["version"];
     $origin = (isset($_REQUEST["origin"])) ? isset($_REQUEST["origin"]) : "undefined";
 
@@ -58,7 +58,7 @@
      * Set status code if needed
      */
     if($result["error"] == true)
-        http_response_code(413);
+        http_response_code(206);
 
     /*
      * Show results

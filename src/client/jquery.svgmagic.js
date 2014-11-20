@@ -9,7 +9,7 @@
     
     * Mark van Eijk [mark@vormkracht10.nl]                            Improvements to PHP converter script
 
-    Version 2.4.5
+    Version 3.0.0
     
     ---
 
@@ -192,6 +192,7 @@
             callback:               false,
             backgroundimage:        false,
             dumpcache:              false,
+            debug:                  false,
 
             // Replacements for deprecated options
             temporaryHoldingImage:  null,
@@ -201,7 +202,7 @@
             postReplacementCallback:null,
 
             // New options
-            remoteServerUri:        'http://bitlabs.nl/svgmagic/converter.php',
+            remoteServerUri:        'http://bitlabs.nl/svgmagic/converter/index.php',
             remoteRequestType:      'POST',
             remoteDataType:         'jsonp',
             
@@ -227,7 +228,10 @@
         if(window.location.protocol == "https:" || options.additionalRequestData.secure)
         {
             options.remoteServerUri = options.remoteServerUri.replace("http://", "https://");
+
         }
+
+        log(false, "Using " + options.remoteServerUri + " as remote server");
     
         /**
          * The place where all magic starts
@@ -295,6 +299,8 @@
                     }
                 }
             });
+
+            log(false, ["Builded image list", output]);
       
             return output;
         }
@@ -366,7 +372,7 @@
                 sources.push(images[i].originalUri);
             }
 
-            $.extend(data, opts.additionalRequestData, { svgsources: sources });
+            $.extend(data, opts.additionalRequestData, { svgsources: sources, version: 2.5 });
 
             $.ajax({
                 dataType: opts.remoteDataType,
@@ -376,11 +382,13 @@
                 success: function(response) {
                     for(var i = 0; i < images.length; i++)
                     {
-                        var
-                        image = images[i],
-                        responseUri = response.results[i].url;
+                        var image = images[i],
+                            responseUri = response.images[i].image;
 
                         image.replacementUri = responseUri;
+                        image.error = response.images[i].error;
+                        image.responseMsg = response.images[i].msg;
+                        image.filename = response.images[i].filename;
                     }
 
                     performReplacements(opts);
@@ -396,13 +404,21 @@
             for(var i = 0; i < images.length; i++)
             {
                 var image = images[i], newUri = image.replacementUri;
-
+                
                 if(!newUri)
                 {
+                    log(true, image.filename + ": No new url received");
+                    continue;
+                }
+                else if(image.error)
+                {
+                    log(true, image.filename + ": " + image.responseMsg);
                     continue;
                 }
                 else if(!image.isBackground)
                 {
+                    log(false, image.filename + ": Image replacing with: " + newUri);
+
                     if(opts.temporaryHoldingImage)
                     {
                         clearTimeout(holdingImageTimeouts[i]);
@@ -411,6 +427,7 @@
                 }
                 else
                 {
+                    log(false, image.filename + ": Background image replacing with: " + newUri);
                     image.element.css(backgroundImagePropertyName, 'url("' + newUri + '")');
                 }
             }
@@ -455,6 +472,18 @@
             }
 
             return originalOptions;
+        }
+
+        /*
+         * Create console log message of option has been enabled
+         */
+        function log(error, msg){
+            if(options.debug){
+                if(error)
+                    console.error(msg)
+                else
+                    console.log(msg);
+            }
         }
 
         // Return the original jQuery object, standard jQuery behaviour.

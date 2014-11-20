@@ -6,7 +6,7 @@
     
     * Dirk Groenen [Bitlabs Development - dirk@bitlabs.nl]            Original author
 
-    Version 2.5
+    Version 3.0.0
     
     ---
 
