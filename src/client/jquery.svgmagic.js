@@ -372,7 +372,8 @@
                 sources.push(images[i].originalUri);
             }
 
-            $.extend(data, opts.additionalRequestData, { svgsources: sources, version: 2.5 });
+            var baseUrl = window.location.href.split('/');
+            $.extend(data, opts.additionalRequestData, { svgsources: sources, version: 2.5, origin: baseUrl[2] });
 
             $.ajax({
                 dataType: opts.remoteDataType,
