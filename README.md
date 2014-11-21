@@ -81,15 +81,20 @@ Changelog
 ----------
 ## 3.0.0 (unreleased)
 
+### Client:
     New features:
         - SVGMagic can now return usefull debug information while replacing SVG images. 
-        - Fully rewrite of the server script. The server will now provide much more information about the convert process.
 
     New options:
         - debug: Show usefull debug information in the console
 
     Documentation:
         - Added changelog to the bottom of the README
+
+### Server:
+    New features:
+        - Fully rewrite of the server script. The server will now provide much more information about the convert process.
+
 
 ## 2.4.0 (2014-08-01)
     
