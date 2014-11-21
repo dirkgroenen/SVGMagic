@@ -27,7 +27,7 @@
 class Converter {
 
     private $origin;
-    private $rootdirectory = "../images/results";
+    private $rootdirectory = "../../images/results";
     private $sitedirectory;
     private $publicurl;
     private $imageurls;
@@ -88,7 +88,7 @@ class Converter {
             }
 
             // Add response to array
-            if($this->version >= 2.5)
+            if($this->version >= 3)
                 $this->response["images"][] = $image;
             else
                 $this->response["results"][] = array("url" => $image["image"]);
@@ -111,7 +111,12 @@ class Converter {
         // Check if image is datauri or url
         if(preg_match("/^data:image\/svg\+xml/", $srcimage) == 1){
             $response["type"]       = "datauri";
-            $response["filename"]   = (rand(1,1000) * time()) . ".datauri.svg"; 
+            $filename               = md5($srcimage);
+            $response["filename"]   = $filename;
+
+            // Prepare the new $srcimage and secode
+            $srcimage = str_replace("data:image/svg+xml;base64,", "", $srcimage);
+            $srcimage = base64_decode($srcimage);
         }
         else{
             $response["type"] = "url";
@@ -126,7 +131,10 @@ class Converter {
 
         // Check if file already exists
         if(file_exists($this->sitedirectory . '/' . $filename . '.png')){
+            $lastmodified = filemtime($this->sitedirectory . '/' . $filename . '.png');
+
             $response["image"] = $this->publicurl . "/" . $filename . ".png";
+            $response["msg"] = "Image retrieved from cache. Saved at: " . date("Y-m-d H:i:s", $lastmodified);
             return $response;  // Kill and return response
         }
         
