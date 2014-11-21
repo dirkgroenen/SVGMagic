@@ -74,7 +74,7 @@ A demo of SVGMagic can be found on the [SVGMagic website](http://svgmagic.bitlab
 
 Known bugs
 ----------
-[empty]
+- When many images need to be replaced the URL can get too long which will result in a server 414 error.
 
 Changelog
 ----------
