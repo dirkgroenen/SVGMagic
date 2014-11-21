@@ -89,6 +89,7 @@ Changelog
 
     Documentation:
         - Added changelog to the bottom of the README
+        - Automatically return images over https when request was over https.
 
 #### Server:
     New features:
