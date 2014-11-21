@@ -48,7 +48,7 @@ $('img').svgmagic({
     postReplacementCallback:null, // Function to run before replacement
 
     // New options
-    remoteServerUri:        'https://bitlabs.nl/svgmagic/converter/3', // Uri of the (remote) API script
+    remoteServerUri:        'https://bitlabs.nl/svgmagic/converter/3/', // Uri of the (remote) API script
     remoteRequestType:      'POST', // Request type for the API call
     remoteDataType:         'jsonp', // Data type for the API call
     debug:                  'false' // Show usefull debug information in the console
