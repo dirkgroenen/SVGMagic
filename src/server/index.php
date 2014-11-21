@@ -28,7 +28,7 @@
     /*
      * Require the converter class
     */
-    require_once("converter.class.php");
+    require_once("./converter.class.php");
 
     /* 
      * Set correct headers for the requests 
