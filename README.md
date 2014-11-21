@@ -80,10 +80,10 @@ Known bugs
 Changelog
 ----------
 ## 3.0.0 (unreleased)
-
-### Client:
+#### Client:
     New features:
         - SVGMagic can now return usefull debug information while replacing SVG images. 
+        - Added timeout to ajax request. Show debug information when timeout gets exceeded.
 
     New options:
         - debug: Show usefull debug information in the console
@@ -91,10 +91,11 @@ Changelog
     Documentation:
         - Added changelog to the bottom of the README
 
-### Server:
+#### Server:
     New features:
         - Fully rewrite of the server script. The server will now provide much more information about the convert process.
-
+        - Response will contain the creation date of cached images.
+        - Data images are now also cached.
 
 ## 2.4.0 (2014-08-01)
     
