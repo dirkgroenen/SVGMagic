@@ -48,9 +48,10 @@ $('img').svgmagic({
     postReplacementCallback:null, // Function to run before replacement
 
     // New options
-    remoteServerUri:        'http://svgmagic.bitlabs.nl/converter.php', // Uri of the (remote) API script
+    remoteServerUri:        'https://bitlabs.nl/svgmagic/converter/3', // Uri of the (remote) API script
     remoteRequestType:      'POST', // Request type for the API call
     remoteDataType:         'jsonp', // Data type for the API call
+    debug:                  'false' // Show usefull debug information in the console
 });
 ```
 
@@ -75,3 +76,41 @@ A demo of SVGMagic can be found on the [SVGMagic website](http://svgmagic.bitlab
 Known bugs
 ----------
 [empty]
+
+Changelog
+----------
+## 3.0.0 (unreleased)
+
+    New features:
+        - SVGMagic can now return usefull debug information while replacing SVG images. 
+        - Fully rewrite of the server script. The server will now provide much more information about the convert process.
+
+    New options:
+        - debug: Show usefull debug information in the console
+
+    Documentation:
+        - Added changelog to the bottom of the README
+
+## 2.4.0 (2014-08-01)
+    
+    New features: 
+        - Add extra post data to the ajax request
+        - Now also finds data:image SVGs
+        
+    New options:
+        - temporaryHoldingImage:    replacement for preloader
+        - forceReplacements:        replacement for testmode
+        - handleBackgroundImages:   replacement for backgroundimage
+        - additionalRequestData:    send extra data to the server that replaces the SVGs for PNGs
+        - postReplacementCallback:  callback function that will be executed before replacement
+        - remoteServerUri:          the URI of the remote server that converts the images to PNG
+        - remoteRequestType:        set the type of the ajax request (post/get)
+        - remoteDataType:           the datatype sent to and received from the remote server
+        
+    Deprecated options:
+        - preloader         > temporaryHoldingImage
+        - testmode          > forceReplacements
+        - backgroundimage   > handleBackgroundImages
+        - secure            > additionalRequestData
+        - callback          > postReplacementCallback
+        - dumpcache         > additionalRequestData
