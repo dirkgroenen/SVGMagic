@@ -1,0 +1,1 @@
+script: phantomjs ./tests/requests.js
