@@ -7,8 +7,7 @@ page.open(server, "get", data, function (status) {
         console.log('Unable to post');
     } else {
         var response = JSON.parse(page.plainText);
-
-        
+        console.log(page.plainText);
     }
-    phantom.exit();
+    phantom.exit(1);
 });
