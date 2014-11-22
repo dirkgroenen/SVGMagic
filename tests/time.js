@@ -14,7 +14,7 @@ var tests = [
 	{
 		dumpcache: true,
 		time: 0,
-		maxtime: 500,
+		maxtime: 1000,
 		success: false,
 		finished: false,
 		error: false,
@@ -23,7 +23,7 @@ var tests = [
 	{
 		dumpcache: false,
 		time: 0,
-		maxtime: 100,
+		maxtime: 250,
 		success: false,
 		finished: false,
 		error: false,
