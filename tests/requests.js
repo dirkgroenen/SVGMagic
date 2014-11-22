@@ -148,6 +148,10 @@ function addTest(name, testData){
  * Init the testing
  */
 function initAndStart(){
+	console.log("===========================");
+	console.log("Starting API requests test");
+	console.log("===========================");
+
 	addTest("v2", v2data);
 	addTest("v3", v3data);
 
