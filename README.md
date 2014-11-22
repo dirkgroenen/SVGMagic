@@ -80,7 +80,7 @@ Known bugs
 
 Changelog
 ----------
-## 3.0.0 (unreleased)
+## 3.0.0 (2014-11-22)
 #### Client:
     New features:
         - SVGMagic can now return usefull debug information while replacing SVG images. 
