@@ -7,6 +7,8 @@ A big advantage of SVGMagic is that you don't have to create multiple versions o
 
 You can find more information and demos on [our website](http://svgmagic.bitlabs.nl/).
 
+[![Build Status](https://travis-ci.org/dirkgroenen/SVGMagic.svg?branch=master)](https://travis-ci.org/dirkgroenen/SVGMagic)
+
 SVG... what/why?
 ------------
 SVG is a vector graphics format, meaning it's perfectly scalable. Whatever size it needs to display at, or whatever screen it needs to display on, an SVG will adapt perfectly. This means that you can use the same image for desktop and mobile (including Retina) visitors. They all get a perfectly sharp image.
