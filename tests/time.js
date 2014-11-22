@@ -11,24 +11,24 @@ var EXIT_SUCCESS = 0,
 // vars
 var pageurl = 'http://bitlabs.nl/svgmagic/tests/all.php';
 var tests = [
-	{
-		dumpcache: true,
-		time: 0,
-		maxtime: 1000,
-		success: false,
-		finished: false,
-		error: false,
-		started: false
-	},
-	{
-		dumpcache: false,
-		time: 0,
-		maxtime: 250,
-		success: false,
-		finished: false,
-		error: false,
-		started: false
-	}
+    {
+        dumpcache: true,
+        time: 0,
+        maxtime: 1000,
+        success: false,
+        finished: false,
+        error: false,
+        started: false
+    },
+    {
+        dumpcache: false,
+        time: 0,
+        maxtime: 250,
+        success: false,
+        finished: false,
+        error: false,
+        started: false
+    }
 ];
 
 /*
@@ -49,9 +49,9 @@ function runTest(test){
             test.error = true;
         } 
         else {
-        	// Get response
+            // Get response
             var time = page.evaluate(function(){
-            	return $("#replacetime").text();
+                return $("#replacetime").text();
             });
 
             // Save response in batch and start validating
@@ -68,8 +68,8 @@ function runTest(test){
  */
 function validateTestResult(test){
     // Loop through check batches
-	if(test.time < test.maxtime)
-		test.success = true;
+    if(test.time < test.maxtime)
+        test.success = true;
 
     // Set batch to finished
     test.finished = true;
@@ -82,68 +82,68 @@ function validateTestResult(test){
  * Run the next test in the tests
  */
 function runNextTest(){
-	// Loop through tests
-	for(var x = 0; x < tests.length; x++){
-		// check if test hasn't been started yet
-		if(!tests[x].started){
-			tests[x].started = true;
-			runTest(tests[x]);
+    // Loop through tests
+    for(var x = 0; x < tests.length; x++){
+        // check if test hasn't been started yet
+        if(!tests[x].started){
+            tests[x].started = true;
+            runTest(tests[x]);
 
-			// Stop the looping
-			return;
-		}
-	}
+            // Stop the looping
+            return;
+        }
+    }
 
-	// At this point all tests have been done and batch results need to be finished
-	validateBatchData();
+    // At this point all tests have been done and batch results need to be finished
+    validateBatchData();
 };
 
 /*
  * Validate all results in the batches to check if we had a succesfull test
  */
 function validateBatchData(){
-	for(var x = 0; x < tests.length; x++){
+    for(var x = 0; x < tests.length; x++){
 
-	    console.log("\n===================");
-		console.log("Validating test " + x);
-		console.log("===================");
+        console.log("\n===================");
+        console.log("Validating test " + x);
+        console.log("===================");
 
-		if(tests[x].started && tests[x].finished){
-			if(tests[x].error){
-				console.log("Error in test: " + x);
+        if(tests[x].started && tests[x].finished){
+            if(tests[x].error){
+                console.log("Error in test: " + x);
 
-				phantom.exit(EXIT_ERROR);
-			}
-			
-			if(!tests[x].success){
-				console.log("Failure in test " + x + " results. Time should have been below: " + tests[x].maxtime + ", but was: " + tests[x].time + ".");
-				phantom.exit(EXIT_ERROR);
-			}
-			else{
-				console.log("Test " + x + " success (dumpcache: " + tests[x].dumpcache + "). Time was " + tests[x].time + ". Max runtime was set on: " + tests[x].maxtime);
-			}
+                phantom.exit(EXIT_ERROR);
+            }
+            
+            if(!tests[x].success){
+                console.log("Failure in test " + x + " results. Time should have been below: " + tests[x].maxtime + ", but was: " + tests[x].time + ".");
+                phantom.exit(EXIT_ERROR);
+            }
+            else{
+                console.log("Test " + x + " success (dumpcache: " + tests[x].dumpcache + "). Time was " + tests[x].time + ". Max runtime was set on: " + tests[x].maxtime);
+            }
 
-		}
-		else{
-			console.log("Not all tests have been finished, calling next test again");
+        }
+        else{
+            console.log("Not all tests have been finished, calling next test again");
 
-			runNextTest();
-			return;
-		}
-	}
+            runNextTest();
+            return;
+        }
+    }
 
-	phantom.exit(EXIT_SUCCESS);
+    phantom.exit(EXIT_SUCCESS);
 };
 
 /*
  * Init the testing
  */
 function initAndStart(){
-	console.log("===========================");
-	console.log("Starting time test");
-	console.log("===========================");
+    console.log("===========================");
+    console.log("Starting time test");
+    console.log("===========================");
 
-	runNextTest();
+    runNextTest();
 };
 
 // Run tests

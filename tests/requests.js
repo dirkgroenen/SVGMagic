@@ -36,7 +36,7 @@ function runTest(batch){
             batch.finished = true;
         } 
         else {
-        	// Get response
+            // Get response
             var response = JSON.parse(page.plainText);
 
             // Save response in batch and start validating
@@ -54,10 +54,10 @@ function runTest(batch){
 function validateTestResults(batch){
     // Loop through check batches
     if(batch.resultData.error == true){
-    	batch.error = true;
+        batch.error = true;
     }
     else{
-    	batch.success = true;
+        batch.success = true;
     }
 
     // Set batch to finished
@@ -71,58 +71,58 @@ function validateTestResults(batch){
  * Run the next test in the batch
  */
 function runNextTest(){
-	// Loop through tests
-	for(var x = 0; x < batches.length; x++){
-		// check if test hasn't been started yet
-		if(!batches[x].started){
-			batches[x].started = true;
-			runTest(batches[x]);
+    // Loop through tests
+    for(var x = 0; x < batches.length; x++){
+        // check if test hasn't been started yet
+        if(!batches[x].started){
+            batches[x].started = true;
+            runTest(batches[x]);
 
-			// Stop the looping
-			return;
-		}
-	}
+            // Stop the looping
+            return;
+        }
+    }
 
-	// At this point all tests have been done and batch results need to be finished
-	validateBatchData();
+    // At this point all tests have been done and batch results need to be finished
+    validateBatchData();
 };
 
 /*
  * Validate all results in the batches to check if we had a succesfull test
  */
 function validateBatchData(){
-	for(var x = 0; x < batches.length; x++){
+    for(var x = 0; x < batches.length; x++){
 
-	    console.log("\n===================");
-		console.log("Validating test: " + batches[x].name);
-		console.log("===================");
+        console.log("\n===================");
+        console.log("Validating test: " + batches[x].name);
+        console.log("===================");
 
-		if(batches[x].started && batches[x].finished){
-			if(batches[x].error){
-				console.log("Failure in test: " + batches[x].name);
-				console.log("Server responded with: " + batches[x].resultData.msg);
-				console.log("\nBatch data: " + JSON.stringify(batches[x]));
+        if(batches[x].started && batches[x].finished){
+            if(batches[x].error){
+                console.log("Failure in test: " + batches[x].name);
+                console.log("Server responded with: " + batches[x].resultData.msg);
+                console.log("\nBatch data: " + JSON.stringify(batches[x]));
 
-				phantom.exit(EXIT_FAILURE);
-			}
-			else if(!batches[x].success){
-				console.log("Error in test " + batches[x].name + " results. No success or error reported.")
-				phantom.exit(EXIT_ERROR);
-			}
-			else{
-				console.log("Test " + batches[x].name + " success");
-			}
+                phantom.exit(EXIT_FAILURE);
+            }
+            else if(!batches[x].success){
+                console.log("Error in test " + batches[x].name + " results. No success or error reported.")
+                phantom.exit(EXIT_ERROR);
+            }
+            else{
+                console.log("Test " + batches[x].name + " success");
+            }
 
-		}
-		else{
-			console.log("Not all tests have been finished, calling next test again");
+        }
+        else{
+            console.log("Not all tests have been finished, calling next test again");
 
-			runNextTest();
-			return;
-		}
-	}
+            runNextTest();
+            return;
+        }
+    }
 
-	phantom.exit(EXIT_SUCCESS);
+    phantom.exit(EXIT_SUCCESS);
 };
 
 
@@ -133,14 +133,14 @@ function validateBatchData(){
  * @param string testData
  */
 function addTest(name, testData){
-	batches.push({
-		name: name,
-		testData: testData,
-		resultData: {},
-		success: false,
-		started: false,
-		finished: false
-	});
+    batches.push({
+        name: name,
+        testData: testData,
+        resultData: {},
+        success: false,
+        started: false,
+        finished: false
+    });
 };
 
 
@@ -148,14 +148,14 @@ function addTest(name, testData){
  * Init the testing
  */
 function initAndStart(){
-	console.log("===========================");
-	console.log("Starting API requests test");
-	console.log("===========================");
+    console.log("===========================");
+    console.log("Starting API requests test");
+    console.log("===========================");
 
-	addTest("v2", v2data);
-	addTest("v3", v3data);
+    addTest("v2", v2data);
+    addTest("v3", v3data);
 
-	runNextTest();
+    runNextTest();
 };
 
 // Run tests
