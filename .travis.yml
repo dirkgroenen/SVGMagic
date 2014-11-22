@@ -1,1 +1,2 @@
 script: phantomjs ./tests/requests.js
+script: phantomjs ./tests/domreplacer.js
