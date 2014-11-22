@@ -120,7 +120,7 @@ function validateBatchData(){
 				phantom.exit(EXIT_ERROR);
 			}
 			else{
-				console.log("Test " + x + " success. Time was " + tests[x].time + ". Max runtime was set on: " + tests[x].maxtime);
+				console.log("Test " + x + " success (dumpcache: " + tests[x].dumpcache + "). Time was " + tests[x].time + ". Max runtime was set on: " + tests[x].maxtime);
 			}
 
 		}
