@@ -1,0 +1,2 @@
+language: javascript
+script: phantomjs ./tests/requests.js && phantomjs ./tests/domreplacer.js && phantomjs ./tests/time.js

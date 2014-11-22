@@ -48,14 +48,14 @@ $('img').svgmagic({
     postReplacementCallback:null, // Function to run before replacement
 
     // New options
-    remoteServerUri:        'http://svgmagic.bitlabs.nl/converter.php', // Uri of the (remote) API script
+    remoteServerUri:        'https://bitlabs.nl/svgmagic/converter/3/', // Uri of the (remote) API script
     remoteRequestType:      'POST', // Request type for the API call
     remoteDataType:         'jsonp', // Data type for the API call
+    debug:                  'false' // Show usefull debug information in the console
 });
 ```
 
-additionalRequestData
--------
+### additionalRequestData
 The ```additionalRequestData``` option gives you the posibility to add extra data to the ajax request. The default API script supports two extra options: ```{secure: true}``` and ```{dumpcache: true}```. 
 
 Support
@@ -74,4 +74,49 @@ A demo of SVGMagic can be found on the [SVGMagic website](http://svgmagic.bitlab
 
 Known bugs
 ----------
-[empty]
+- When many images need to be replaced the URL can get too long which will result in a server 414 error.
+
+Changelog
+----------
+## 3.0.0 (unreleased)
+#### Client:
+    New features:
+        - SVGMagic can now return usefull debug information while replacing SVG images. 
+        - Added timeout to ajax request. Show debug information when timeout gets exceeded.
+
+    New options:
+        - debug: Show usefull debug information in the console
+
+    Documentation:
+        - Added changelog to the bottom of the README
+        - Automatically return images over https when request was over https.
+
+#### Server:
+    New features:
+        - Fully rewrite of the server script. The server will now provide much more information about the convert process.
+        - Response will contain the creation date of cached images.
+        - Data images are now also cached.
+
+## 2.4.0 (2014-08-01)
+    
+    New features: 
+        - Add extra post data to the ajax request
+        - Now also finds data:image SVGs
+        
+    New options:
+        - temporaryHoldingImage:    replacement for preloader
+        - forceReplacements:        replacement for testmode
+        - handleBackgroundImages:   replacement for backgroundimage
+        - additionalRequestData:    send extra data to the server that replaces the SVGs for PNGs
+        - postReplacementCallback:  callback function that will be executed before replacement
+        - remoteServerUri:          the URI of the remote server that converts the images to PNG
+        - remoteRequestType:        set the type of the ajax request (post/get)
+        - remoteDataType:           the datatype sent to and received from the remote server
+        
+    Deprecated options:
+        - preloader         > temporaryHoldingImage
+        - testmode          > forceReplacements
+        - backgroundimage   > handleBackgroundImages
+        - secure            > additionalRequestData
+        - callback          > postReplacementCallback
+        - dumpcache         > additionalRequestData

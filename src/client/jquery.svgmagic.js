@@ -9,7 +9,7 @@
     
     * Mark van Eijk [mark@vormkracht10.nl]                            Improvements to PHP converter script
 
-    Version 2.4.5
+    Version 3.0.0
     
     ---
 
@@ -122,6 +122,8 @@
  *                            remote server/API endpoint containing a list of the URIs of the SVG images to be replaced,
  *                            The response is parsed for the URIs of the replacement PNG images. 
  * 
+ * * debug          [boolean] When enabled the script will provide usefull debug information. By default this option is
+ *                            set to 'false'. Please remember to disable this option when in a production environment.
  * ------------------
  * Deprecated options
  * ------------------
@@ -201,9 +203,10 @@
             postReplacementCallback:null,
 
             // New options
-            remoteServerUri:        'http://bitlabs.nl/svgmagic/converter.php',
+            remoteServerUri:        'http://bitlabs.nl/svgmagic/converter/3/',
             remoteRequestType:      'POST',
             remoteDataType:         'jsonp',
+            debug:                  false,
             
             // TODO: Implement this option
             replacementUriCreator:  null
@@ -219,7 +222,8 @@
         urlMatcher = /^url\(["']?([^"'()]+)["']?\)$/,
         svgExtension = /\.svg$/,
         svgDataUri = /^data:image\/svg\+xml/,
-        holdingImageTimeoutDuration = 500;
+        holdingImageTimeoutDuration = 500,
+        VERSION = 3.0;
     
         /**
          * Check if the remoteServerUri has to be replaced with https
@@ -227,7 +231,10 @@
         if(window.location.protocol == "https:" || options.additionalRequestData.secure)
         {
             options.remoteServerUri = options.remoteServerUri.replace("http://", "https://");
+
         }
+
+        log(false, "Using " + options.remoteServerUri + " as remote server");
     
         /**
          * The place where all magic starts
@@ -295,6 +302,8 @@
                     }
                 }
             });
+
+            log(false, ["Builded image list", output]);
       
             return output;
         }
@@ -366,24 +375,32 @@
                 sources.push(images[i].originalUri);
             }
 
-            $.extend(data, opts.additionalRequestData, { svgsources: sources });
+            // Get baseurl
+            var baseUrl = window.location.href.split('/');
+            $.extend(data, opts.additionalRequestData, { svgsources: sources, version: VERSION, origin: baseUrl[2] });
 
             $.ajax({
                 dataType: opts.remoteDataType,
                 method: opts.remoteRequestType,
                 url: opts.remoteServerUri,
                 data: data,
-                success: function(response) {
+                timeout: 3000,
+                success: function(response, textStatus, jqXHR) {
                     for(var i = 0; i < images.length; i++)
                     {
-                        var
-                        image = images[i],
-                        responseUri = response.results[i].url;
+                        var image = images[i],
+                            responseUri = response.images[i].image;
 
                         image.replacementUri = responseUri;
+                        image.error = response.images[i].error;
+                        image.responseMsg = response.images[i].msg;
+                        image.filename = response.images[i].filename;
                     }
 
                     performReplacements(opts);
+                },
+                error: function(){
+                    log(true, "The request took longer than 3 seconds to complete. No image were replaced. Use the developer tools to check wheter the server responded with an error.")
                 }
             });
         }
@@ -399,10 +416,18 @@
 
                 if(!newUri)
                 {
+                    log(true, image.filename + ": No new url received");
+                    continue;
+                }
+                else if(image.error)
+                {
+                    log(true, image.filename + ": " + image.responseMsg);
                     continue;
                 }
                 else if(!image.isBackground)
                 {
+                    log(false, image.filename + ": Image replaced. Server responded with: " + image.responseMsg);
+
                     if(opts.temporaryHoldingImage)
                     {
                         clearTimeout(holdingImageTimeouts[i]);
@@ -411,6 +436,7 @@
                 }
                 else
                 {
+                    log(false, image.filename + ": Background image replaced. Server responded with: " + image.responseMsg);
                     image.element.css(backgroundImagePropertyName, 'url("' + newUri + '")');
                 }
             }
@@ -455,6 +481,18 @@
             }
 
             return originalOptions;
+        }
+
+        /*
+         * Create console log message of option has been enabled
+         */
+        function log(error, msg){
+            if(options.debug){
+                if(error)
+                    console.error(msg)
+                else
+                    console.log(msg);
+            }
         }
 
         // Return the original jQuery object, standard jQuery behaviour.
