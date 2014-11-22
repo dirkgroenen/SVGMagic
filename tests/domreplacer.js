@@ -30,7 +30,7 @@ var checks = [
 	}
 ];
 
-var pageurl = "http://bitlabs.nl/svgmagic/tests/all.html";
+var pageurl = "http://bitlabs.nl/svgmagic/tests/all.php?dumpcache=false";
 var page = require('webpage').create();
 var returnerror = false;
 
