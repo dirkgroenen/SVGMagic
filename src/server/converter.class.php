@@ -104,7 +104,7 @@ class Converter {
      * @param boolean $force
      * @return Array response
      */
-    private function convert($srcimage)
+    private function convert($srcimage, $force)
     {
         $response = array("image" => $srcimage, "error" => false, "msg" => "Image converted succesfully");
 
@@ -130,7 +130,7 @@ class Converter {
         }
 
         // Check if file already exists
-        if(file_exists($this->sitedirectory . '/' . $filename . '.png')){
+        if(file_exists($this->sitedirectory . '/' . $filename . '.png') && $force != "true"){
             $lastmodified = filemtime($this->sitedirectory . '/' . $filename . '.png');
 
             $response["image"] = $this->publicurl . "/" . $filename . ".png";
