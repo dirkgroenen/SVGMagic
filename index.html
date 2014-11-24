@@ -48,16 +48,6 @@
     </head>
     
     <body itemscope itemtype="http://schema.org/Code">
-        <div id="fb-root"></div>
-        <script>
-            (function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/nl_NL/all.js#xfbml=1&appId=462401843842149";
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-        </script>
         <header id="main">
             <div class='centercontent'>
                 <div id="logo" itemscope="name"><a href='./'>SVGMagic</a> <div class='sub'>Great jQuery SVG fallback</div></div>
@@ -73,13 +63,13 @@
         
         <section id="middle" itemprop="description">
             <div class='centercontent'>
-                <h1>SVGMagic is a SVG fallback that does it all</h1>
-                <p>SVGMagic is a simple jQuery plugin that searchs for SVG images (including background-images) on your website and <u>creates</u> PNG versions if the browser doesn't support SVG.</p>
+                <h1>SVGMagic: the fully automated SVG fallback</h1>
+                <p>SVGMagic is a simple jQuery plugin that searches for SVG images (including background- and inline dataimages) on your website and <u>creates</u> PNG versions if the browser doesn't support SVG.</p>
                 <p>Wondering why you should use SVG images? SVG images are vector based! Meaning that they will be as sharp as hell no matter how big they are. In other words: one file for every size. <b>See it yourself:</b> (assuming you are now using a browser that understands SVG images)</p>
                 <p style='margin: 30px 0;' id="resize"><img src='./style/resizeicon.svg' class='resize'><br/><a href='#' onclick="$('img.resize').animate({height: '50px', width: '50px'});return false;">50%</a> <a href='#' onclick="$('img.resize').animate({height: '108px', width: '108px'});return false;">100%</a> <a href='#' onclick="$('img.resize').animate({height: '250px', width: '250px'});return false;">250%</a></p>
                 
                 <h1>Cool, but what do I do?</h1>
-                <p>That's where the fine part comes in: almost nothing! Just download the <a href='https://raw.githubusercontent.com/dirkgroenen/SVGMagic/master/src/client/jquery.svgmagic.js' target='_blank'>jquery.svgmagic.js</a> script include it and initialize it.</p>
+                <p>That's where the fine part comes in: almost nothing! Just download the <a href='https://raw.githubusercontent.com/dirkgroenen/SVGMagic' target='_blank'>jquery.svgmagic.js</a> script include it and initialize it.</p>
                 <code>
                     $(document).ready(function(){<br/>&nbsp;&nbsp;&nbsp;$('img').svgmagic();<br/>});
                 </code>
@@ -91,7 +81,7 @@
         <section id="bottom">
             <div class='centercontent'>
                 <h1>Where the magic happens...</h1>
-                <p>SVGmagic checks which browser your visitor is using. Is it a browser that doesn't support SVG images, than it starts the magic! First of all the script will check which images on your website are SVG and collects their URLs. These URLs are then send to our server which will temporarily download, convert and save them. When that's done the server send back a package with new URLs. The SVG images on your website than get replaced by the new PNG images and your old-school visitor can see the 'SVG' images.</p>
+                <p>SVGmagic checks if your visitor's browser understands SVG images. If it doesn't it will start replacing and converting all SVG images to PNG versions! First of all the script will check which images on your website are SVG and collects their URLs. These URLs are then send to our server which will temporarily download, convert and save them. When that's done the server sends back a package with new URLs. The SVG images on your website than get replaced by the new PNG images and your old-school visitor can see the 'SVG' images.</p>
                 <h2>Security</h2>
                 <p>Of course we have thought about security. So (if enabled) all the PNG images are linked to our server with <span style='color: green;'>https://</span>.</p>
                 
@@ -116,8 +106,12 @@
         </section>
         
         <footer>
-            <div class="fb-like" data-href="http://svgmagic.bitlabs.nl/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-            <div class="copy"><a href='https://bitlabs.nl' target='_blank'>A Bitlabs project</a> - <a href="https://plus.google.com/+DirkGroenen?rel=author" target="_blank">Google</a></div>
+            <div class="githubbuttons">
+                <iframe src="http://ghbtns.com/github-btn.html?user=dirkgroenen&repo=SVGMagic&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>
+                <iframe src="http://ghbtns.com/github-btn.html?user=dirkgroenen&repo=SVGMagic&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>
+                <iframe src="http://ghbtns.com/github-btn.html?user=dirkgroenen&repo=SVGMagic&type=follow&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>
+            </div>
+            <div class="copy"><a href='https://dirkgroenen.nl' target='_blank'>Dirk Groenen</a> - <a href="https://plus.google.com/+DirkGroenen?rel=author" target="_blank">Google+</a></div>
         </footer>
     </body>
 </html>
