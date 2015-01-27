@@ -8,7 +8,7 @@ A big advantage of SVGMagic is that you don't have to create multiple versions o
 You can find more information and demos on [our website](http://svgmagic.bitlabs.nl/).
 
 [![Build Status](https://travis-ci.org/dirkgroenen/SVGMagic.svg?branch=master)](https://travis-ci.org/dirkgroenen/SVGMagic)
-[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=dirkgroenen&url=https://github.com/dirkgroenen/SVGMagic&title=SVGMagic&tags=github&category=software)
+[![Help me with a cup of coffee ](https://pledgie.com/campaigns/28130.png?skin_name=chrome)](https://pledgie.com/campaigns/28130)
 
 SVG... what/why?
 ------------
