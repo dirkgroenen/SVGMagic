@@ -7,7 +7,7 @@
     
     * Craig Fowler [CSF Software Limited - craig@csf-dev.com]         Redesign and enhancements
 
-    Version 3.0.0
+    Version 3.0.1
     
     ---
 
@@ -257,7 +257,7 @@
          */
         function shouldPerformReplacement(opts)
         {
-            return opts.forceReplacements || typeof document.createElement('svg').getAttributeNS !== 'function';
+            return opts.forceReplacements || !document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1");
         }
     
         /**
