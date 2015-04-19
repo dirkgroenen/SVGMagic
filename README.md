@@ -61,6 +61,10 @@ $('img').svgmagic({
 ### additionalRequestData
 The ```additionalRequestData``` option gives you the posibility to add extra data to the ajax request. The default API script supports two extra options: ```{secure: true}``` and ```{dumpcache: true}```. 
 
+Local development
+-----------------
+SVGMagic needs public access to the images on your website, which means that you can't use it when developing in a local environment. In case you still need to use the plugin you can download the ```converter.php``` script and place it on your local machine. 
+
 Support
 -------
 The plugin is tested in Internet Explorer Version 7 and 8 (other browsers already support SVG files).
